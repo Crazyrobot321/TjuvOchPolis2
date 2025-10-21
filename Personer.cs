@@ -14,8 +14,10 @@ namespace TjuvOchPolis
         public int DirectionY { get; set; }
         public List<String> Properties{ get; set; }
         
-        public static int maxX = Program.width;
-        public static int maxY = Program.height;
+        public static int maxX = Program.width - 2;
+        public static int maxY = Program.height - 2;
+        public static int minX = 2;
+        public static int minY = 1;
 
         public Personer(int locationX, int locationY, int directionX, int directionY, List<String>properties)
         {
@@ -39,30 +41,40 @@ namespace TjuvOchPolis
                         if (RndX <= 10)
                         {
                             medborgare.DirectionX = Random.Shared.Next(-1, 2);
+                            continue;
                         }
                         if (RndY <= 10)
                         {
                             medborgare.DirectionY = Random.Shared.Next(-1, 2);
+                            continue;
+                        }
+
+                        medborgare.LocationX += medborgare.DirectionX;
+                        medborgare.LocationY += medborgare.DirectionY;
+
+                        if (medborgare.LocationX < minX)
+                            medborgare.LocationX = maxX;
+
+                        else if (medborgare.LocationX > maxX)
+                            medborgare.LocationX = minX;
+
+                        if (medborgare.LocationY < minY)
+                            medborgare.LocationY = maxY;
+
+                        else if (medborgare.LocationY > maxY)
+                            medborgare.LocationY = minY;
+
+                        Console.SetCursorPosition(medborgare.LocationX, medborgare.LocationY);
+                        if (debug)
+                        {
+                            Console.Write("");
                         }
                         else
                         {
-                            medborgare.LocationX += medborgare.DirectionX;
-                            medborgare.LocationY += medborgare.DirectionY;
-
-                            medborgare.LocationX = (medborgare.LocationX + maxX) % maxX;
-                            medborgare.LocationY = (medborgare.LocationY + maxY) % maxY;
-
-                            Console.SetCursorPosition(medborgare.LocationX, medborgare.LocationY);
-                            if (debug)
-                            {
-                                Console.Write("");
-                            }
-                            else
-                            {
-                                Console.ForegroundColor = ConsoleColor.Green;
-                                Console.Write("C");
-                            }
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write("C");
                         }
+
                         break;
                     case Thief tjuv:
                         int RndX2 = Random.Shared.Next(0, 100);
@@ -75,25 +87,33 @@ namespace TjuvOchPolis
                         {
                             tjuv.DirectionY = Random.Shared.Next(-1, 2);
                         }
+
+                        tjuv.LocationX += tjuv.DirectionX;
+                        tjuv.LocationY += tjuv.DirectionY;
+
+                        if (tjuv.LocationX < minX)
+                            tjuv.LocationX = maxX;
+
+                        else if (tjuv.LocationX > maxX)
+                            tjuv.LocationX = minX;
+
+                        if (tjuv.LocationY < minY)
+                            tjuv.LocationY = maxY;
+
+                        else if (tjuv.LocationY > maxY)
+                            tjuv.LocationY = minY;
+
+                        Console.SetCursorPosition(tjuv.LocationX, tjuv.LocationY);
+                        if (debug)
+                        {
+                            Console.Write("");
+                        }
                         else
                         {
-                            tjuv.LocationX += tjuv.DirectionX;
-                            tjuv.LocationY += tjuv.DirectionY;
-
-                            tjuv.LocationX = (tjuv.LocationX + maxX) % maxX;
-                            tjuv.LocationY = (tjuv.LocationY + maxY) % maxY;
-
-                            Console.SetCursorPosition(tjuv.LocationX, tjuv.LocationY);
-                            if (debug)
-                            {
-                                Console.Write("");
-                            }
-                            else
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.Write("T");
-                            }
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("T");
                         }
+
                         break;
                     case Police polis:
                         int RndX3 = Random.Shared.Next(0, 100);
@@ -106,26 +126,34 @@ namespace TjuvOchPolis
                         {
                             polis.DirectionY = Random.Shared.Next(-1, 2);
                         }
+
+                        polis.LocationX += polis.DirectionX;
+                        polis.LocationY += polis.DirectionY;
+
+                        //Håller värderna inom giltliga gränser och gör en pac-man effekt
+                        if (polis.LocationX < minX)
+                            polis.LocationX = maxX;
+
+                        else if (polis.LocationX > maxX)
+                            polis.LocationX = minX;
+
+                        if (polis.LocationY < minY)
+                            polis.LocationY = maxY;
+
+                        else if (polis.LocationY > maxY)
+                            polis.LocationY = minY;
+
+                        Console.SetCursorPosition(polis.LocationX, polis.LocationY);
+                        if (debug)
+                        {
+                            Console.Write("");
+                        }
                         else
                         {
-                            polis.LocationX += polis.DirectionX;
-                            polis.LocationY += polis.DirectionY;
-
-                            //Håller värderna inom giltliga gränser och gör en pac-man effekt
-                            polis.LocationX = (polis.LocationX + maxX) % maxX;
-                            polis.LocationY = (polis.LocationY + maxY) % maxY;
-
-                            Console.SetCursorPosition(polis.LocationX, polis.LocationY);
-                            if (debug)
-                            {
-                                Console.Write("");
-                            }
-                            else
-                            {
-                                Console.ForegroundColor = ConsoleColor.Blue;
-                                Console.Write("P");
-                            }
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.Write("P");
                         }
+
                         break;
                     default:
                         break;

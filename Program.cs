@@ -19,15 +19,15 @@ namespace TjuvOchPolis
 
             for(int i = 0; i < 20; i++)
             {
-                personer.Add(new Citizen(Random.Shared.Next(1, width - 2), Random.Shared.Next(1, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), properties));
+                personer.Add(new Citizen(Random.Shared.Next(3, width - 2), Random.Shared.Next(3, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), properties));
             }
             for(int i = 0; i < 10; i++)
             {
-                personer.Add(new Thief(Random.Shared.Next(1, width - 2), Random.Shared.Next(1, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), StolenItems, false));
+                personer.Add(new Thief(Random.Shared.Next(3, width - 2), Random.Shared.Next(3, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), StolenItems, false));
             }
             for(int i = 0; i < 4; i++)
             {
-                personer.Add(new Police(Random.Shared.Next(1, width - 2), Random.Shared.Next(1, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), seizedGoods, 0));
+                personer.Add(new Police(Random.Shared.Next(3, width - 2), Random.Shared.Next(3, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), seizedGoods, 0));
             }
             while (!debug)
             {
@@ -98,41 +98,6 @@ namespace TjuvOchPolis
                         Console.Write(" ");
                     }
                 }
-
-                //int foundOneCharacter = 0;
-                //bool foundOnePerson = false;
-                //bool foundOneThief = false;
-                //bool foundOneCop = false;
-
-                //if (foundOneCharacter == 0)
-                //{
-                //    Console.Write(" ");
-                //}
-
-                //else
-                //{
-                //    if (foundOneCharacter >1)
-                //    {
-                //        Console.Write("¤");
-                //    }
-                //    else
-                //    {
-                //        if (foundOnePerson)
-                //        {
-                //            Console.Write("C");
-                //        }
-                //        else if (foundOneThief)
-                //        {
-                //            Console.Write("T");
-                //        }
-                //        else if (foundOneCop)
-                //        {
-                //            Console.Write("P");
-                //        }
-
-                //    }
-                //}
-
                     Console.WriteLine();
             }
         }
