@@ -38,12 +38,12 @@ namespace TjuvOchPolis
                 hasRan = true;
 
                 Console.SetCursorPosition(0, height);
-                for (int j = 0; j < width + 2; j++)
+                for (int row = 0; row < width + 2; row++)
                 {
-                    if (j == 5)
+                    if (row == 5)
                     {
                         Console.Write(" STATUS ");
-                        j += " STATUS ".Length - 1;
+                        row += " STATUS ".Length - 1;
                     }
                     else
                         Console.Write("=");
@@ -72,16 +72,26 @@ namespace TjuvOchPolis
 
         private static void RenderGameBoard()
         {
-            for (int y = 0; y < height; y++)
+            //spelytan för alla karaktärer ska vara 100x25, därav väggar runt staden
+            var gameHeight = height + 2; //102
+            var gameWidth = width + 2; // 27
+
+            for (int line = 0; line < gameHeight; line++)
             {
-                for (int x = 0; x < width; x++)
+                for (int row = 0; row < width+2; row++)
                 {
-                    if (y == 0 || y == height - 1)
+                    var isFirstLine = line == 0;
+                    var isLastLine = line == gameHeight - 1;
+                    var isFirstRow = row == 0;
+                    var isLastRow = row == gameWidth - 1;
+
+                    if (isFirstLine|| isLastLine)
                     {
-                        if (y == 0 && x == 5)
+                        if (isFirstLine && row == 5)
                         {
-                            Console.Write(" CITY ");
-                            x += " CITY ".Length - 1;
+                            var headline = " CITY ";
+                            Console.Write(headline);
+                            row += headline.Length - 1;
                         }
                         else
                         {
@@ -89,7 +99,8 @@ namespace TjuvOchPolis
                         }
                     }
 
-                    else if (x == 0 || x == width - 1)
+
+                    else if (isFirstRow || isLastRow)
                     {
                         Console.Write("||");
                     }
@@ -98,7 +109,7 @@ namespace TjuvOchPolis
                         Console.Write(" ");
                     }
                 }
-                    Console.WriteLine();
+                Console.WriteLine();
             }
         }
     }
