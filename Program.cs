@@ -5,112 +5,197 @@ namespace TjuvOchPolis
 {
     internal class Program
     {
-        public static int height = 25;
-        public static int width = 100;
-        public static bool hasRan = false;
+        static List<Citizen> citizens = new List<Citizen>();
+
+        static List<Thief> thiefs = new List<Thief>();
+
+        static List<Cop> Cops = new List<Cop>();
+
+
+        static List<string> events = new List<string>();
         static void Main(string[] args)
         {
-            List<String> properties = new List<String> { "Keys", "Mobile", "Wallet", "Watch", "Jewlery"};
-            List<String> seizedGoods = new List<String>();
-            List<String> StolenItems = new List<String>();
-            List<Personer> personer = new List<Personer>();
-            bool hasRan = false;
-            bool debug = false;
+            //Text - välkommen till tjuv och polis
+            RenderHeading();
 
-            for(int i = 0; i < 20; i++)
+            Console.WriteLine("How many charecters do you want? ");
+
+            var numberOfCharacters = int.Parse(Console.ReadLine());
+
+            for (var i = 0; i < numberOfCharacters; i++)
             {
-                personer.Add(new Citizen(Random.Shared.Next(3, width - 2), Random.Shared.Next(3, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), properties));
+                citizens.Add(new Citizen());
+                thiefs.Add(new Thief());
+                Cops.Add(new Cop());
             }
-            for(int i = 0; i < 10; i++)
-            {
-                personer.Add(new Thief(Random.Shared.Next(3, width - 2), Random.Shared.Next(3, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), StolenItems, false));
-            }
-            for(int i = 0; i < 4; i++)
-            {
-                personer.Add(new Police(Random.Shared.Next(3, width - 2), Random.Shared.Next(3, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), seizedGoods, 0));
-            }
-            while (!debug)
+
+            while (true)
             {
                 Console.Clear();
-                RenderGameBoard();
-                Personer.Move(personer, false);
-                //Personer.CollisionCheck(personer, false);
-                hasRan = true;
+                //events = new List<string>();
+                events.Clear();
 
-                Console.SetCursorPosition(0, height);
-                for (int row = 0; row < width + 2; row++)
+                RenderGameBoard();
+
+                foreach (string eventText in events)
                 {
-                    if (row == 5)
-                    {
-                        Console.Write(" STATUS ");
-                        row += " STATUS ".Length - 1;
-                    }
-                    else
-                        Console.Write("=");
+                    Console.WriteLine(eventText);
                 }
-                Console.WriteLine();
-                if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa loopen
-                {
-                    debug = true;
-                    while (debug)
-                    {
-                        Console.Clear();
-                        //Debug.Debugs(personer);
-                        Personer.Move(personer, true);
-                        Console.SetCursorPosition(0, height);
-                        if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd')
-                        {
-                            debug = false;
-                        }
-                        Thread.Sleep(1000);
-                    }
-                }
+
                 Thread.Sleep(1000);
+
+
+                //Hitta nya positioner
+                foreach (Citizen p in citizens)
+                {
+
+                    p.SetNewLocation();
+
+                }
+
+                foreach (Thief thief in thiefs)
+                {
+                    if (!thief.Arrested)
+                    {
+                        thief.SetNewLocation();
+                    }
+                }
+
+                foreach (Cop cop in Cops)
+                {
+                    cop.SetNewLocation();
+                }
             }
 
+            Console.ReadLine();
         }
 
+        private static void RenderHeading()
+        {
+            Console.WriteLine(@" ____                           ____        ______  __                     ___  ");
+            Console.WriteLine(@"/\  _`\                       /|  _ \      /\__  _\/\ \      __          /'___\ ");
+            Console.WriteLine(@"\ \ \/\_\    ___   _____      |/\   |      \/_/\ \/\ \ \___ /\_\     __ /\ \__/ ");
+            Console.WriteLine(@" \ \ \/_/_  / __`\/\ '__`\    \// __`\/\      \ \ \ \ \  _ `\/\ \  /'__`\ \ ,__\");
+            Console.WriteLine(@"  \ \ \L\ \/\ \L\ \ \ \L\ \    /|  \L>  <_     \ \ \ \ \ \ \ \ \ \/\  __/\ \ \_/ ");
+            Console.WriteLine(@"   \ \____/\ \____/\ \ ,__/    | \_____/\/      \ \_\ \ \_\ \_\ \_\ \____\\ \_\ ");
+            Console.WriteLine(@"    \/ ___/  \/___/  \ \ \/    \/____/\/         \/_/  \/_/\/_/\/_/\/____/ \/_/ ");
+            Console.WriteLine(@"                    \ \_\                                                      ");
+            Console.WriteLine(@"                      \/_/  "); 
+        }
         private static void RenderGameBoard()
         {
-            //spelytan för alla karaktärer ska vara 100x25, därav väggar runt staden
-            var gameHeight = height + 2; //102
-            var gameWidth = width + 2; // 27
 
-            for (int line = 0; line < gameHeight; line++)
+            for (int y = 0; y <= 27; y++)
             {
-                for (int row = 0; row < width+2; row++)
-                {
-                    var isFirstLine = line == 0;
-                    var isLastLine = line == gameHeight - 1;
-                    var isFirstRow = row == 0;
-                    var isLastRow = row == gameWidth - 1;
+                Console.ForegroundColor = ConsoleColor.White;
 
-                    if (isFirstLine|| isLastLine)
+                for (int x = 0; x <= 102; x++)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    if (y == 0 || y == 27)
                     {
-                        if (isFirstLine && row == 5)
+                        if(x == 5 && y == 0)
                         {
-                            var headline = " CITY ";
-                            Console.Write(headline);
-                            row += headline.Length - 1;
+                            Console.Write(" CITY ");
+                            x += 5;
                         }
                         else
                         {
                             Console.Write("=");
                         }
-                    }
-
-
-                    else if (isFirstRow || isLastRow)
-                    {
-                        Console.Write("||");
+                            
                     }
                     else
                     {
-                        Console.Write(" ");
+                        if (x == 0 || x == 102)
+                        {
+                            Console.Write("X");
+                        }
+                        else
+                        {
+                            int foundCharacters = 0;
+                            bool foundOnePerson = false;
+                            bool foundOneTheif = false;
+                            bool foundOneCop = false;
+                            foreach (var citizen in citizens)
+                            {
+                                if (citizen.PositionX == x && citizen.PositionY == y)
+                                {
+                                    foundOnePerson = true;
+                                    foundCharacters++;
+
+                                }
+                            }
+
+                            foreach (var thief in thiefs.Where(t => !t.Arrested))
+                            {
+                                if (thief.PositionX == x && thief.PositionY == y)
+                                {
+                                    foundOneTheif = true;
+                                    foundCharacters++;
+
+                                    //Console.Write(" ");
+                                }
+                            }
+
+                            foreach (var cop in Cops)
+                            {
+                                if (cop.PositionX == x && cop.PositionY == y)
+                                {
+                                    foundOneCop = true;
+                                    foundCharacters++;
+
+                                    //Console.Write(" ");
+                                }
+                            }
+
+                            if (foundCharacters == 0)
+                            {
+                                Console.Write(" ");
+                            }
+                            else
+                            {
+                                if (foundCharacters > 1)
+                                {
+                                    //här har vi flera karraktärer på samma plats - Explotion
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+                                    Console.Write("¤");
+
+                                    events.Add($"¤ = {foundCharacters} karaktärer är på samma plats");
+                                }
+                                else
+                                {
+                                    if (foundOnePerson)
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                                        Console.Write("C");
+                                    }
+                                    else if (foundOneTheif)
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Magenta;
+                                        Console.Write("T");
+                                    }
+                                    else if (foundOneCop)
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Blue;
+                                        Console.Write("P");
+                                    }
+                                }
+
+                            }
+
+                        }
+
                     }
+
                 }
                 Console.WriteLine();
+
             }
+
+            Console.ForegroundColor = ConsoleColor.White;
         }
+
     }
 }
