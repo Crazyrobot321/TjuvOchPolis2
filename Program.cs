@@ -1,4 +1,6 @@
-﻿namespace TjuvOchPolis
+﻿using System.Runtime.CompilerServices;
+
+namespace TjuvOchPolis
 {
     internal class Program
     {
@@ -13,7 +15,15 @@
 
             for(int i = 0; i < 20; i++)
             {
-                personer.Add(new Citizen(Random.Shared.Next(width), Random.Shared.Next(height), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), properties));
+                personer.Add(new Citizen(Random.Shared.Next(1, width - 2), Random.Shared.Next(1, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), properties));
+            }
+            for(int i = 0; i < 10; i++)
+            {
+                personer.Add(new Thief(Random.Shared.Next(1, width - 2), Random.Shared.Next(1, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), StolenItems, false));
+            }
+            for(int i = 0; i < 4; i++)
+            {
+                personer.Add(new Police(Random.Shared.Next(1, width - 2), Random.Shared.Next(1, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), seizedGoods, 0));
             }
             while (true)
             {
