@@ -33,7 +33,6 @@ namespace TjuvOchPolis
             {
                 Console.Clear();
                 RenderGameBoard();
-                //Personer.PlaceCitizen(personer, hasRan);
                 Personer.Move(personer, false);
                 //Personer.CollisionCheck(personer, false);
                 hasRan = true;

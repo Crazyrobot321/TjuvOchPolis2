@@ -26,31 +26,6 @@ namespace TjuvOchPolis
             Properties = properties;
         }
 
-        public static void PlaceCitizen(List<Personer> test, bool hasRan)
-        {
-            foreach (Personer personer in test)
-            {
-                if (personer is Citizen medborgare)
-                {
-                    Console.SetCursorPosition(medborgare.LocationX, medborgare.LocationY);
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("C");
-                }
-                if (personer is Thief tjuv)
-                {
-                    Console.SetCursorPosition(tjuv.LocationX, tjuv.LocationY);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("T");
-                }
-                if (personer is Police polis)
-                {
-                    Console.SetCursorPosition(polis.LocationX, polis.LocationY);
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.Write("P");
-                }
-            }
-            Console.ForegroundColor = ConsoleColor.White;
-        }
         public static void Move(List<Personer> personer, bool debug)
         {
             foreach (Personer p in personer)
