@@ -26,6 +26,8 @@ namespace TjuvOchPolis
             Properties = properties;
         }
 
+        
+
         public static void Move(List<Personer> personer, bool debug)
         {
             foreach (Personer p in personer)
@@ -46,12 +48,14 @@ namespace TjuvOchPolis
                         }
                         else
                         {
+                           
+                            
                             medborgare.LocationX += medborgare.DirectionX;
                             medborgare.LocationY += medborgare.DirectionY;
 
                             medborgare.LocationX = (medborgare.LocationX + maxX) % maxX;
                             medborgare.LocationY = (medborgare.LocationY + maxY) % maxY;
-
+                            
                             Console.SetCursorPosition(medborgare.LocationX, medborgare.LocationY);
                             if (debug)
                             {
@@ -77,12 +81,14 @@ namespace TjuvOchPolis
                         }
                         else
                         {
+                            
+                            
                             tjuv.LocationX += tjuv.DirectionX;
                             tjuv.LocationY += tjuv.DirectionY;
 
                             tjuv.LocationX = (tjuv.LocationX + maxX) % maxX;
                             tjuv.LocationY = (tjuv.LocationY + maxY) % maxY;
-
+                            
                             Console.SetCursorPosition(tjuv.LocationX, tjuv.LocationY);
                             if (debug)
                             {
@@ -108,13 +114,15 @@ namespace TjuvOchPolis
                         }
                         else
                         {
+                            
+                            
                             polis.LocationX += polis.DirectionX;
                             polis.LocationY += polis.DirectionY;
 
                             //Håller värderna inom giltliga gränser och gör en pac-man effekt
                             polis.LocationX = (polis.LocationX + maxX) % maxX;
                             polis.LocationY = (polis.LocationY + maxY) % maxY;
-
+                            
                             Console.SetCursorPosition(polis.LocationX, polis.LocationY);
                             if (debug)
                             {
@@ -133,6 +141,8 @@ namespace TjuvOchPolis
             }
             Console.ForegroundColor = ConsoleColor.White;
         }
+
+       
     }
 
     class Citizen : Personer
