@@ -6,7 +6,7 @@
         public static int width = 100;
         static void Main(string[] args)
         {
-            List<String> properties = new List<String> { "Keys", "Mobile", "Wallet", "Watch" };
+            List<String> properties = new List<String> { "Keys", "Mobile", "Wallet", "Watch", "Jewlery"};
             List<String> seizedGoods = new List<String>();
             List<String> StolenItems = new List<String>();
             List<Personer> personer = new List<Personer>();
