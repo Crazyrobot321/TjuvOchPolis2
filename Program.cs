@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace TjuvOchPolis
 {
@@ -6,12 +7,15 @@ namespace TjuvOchPolis
     {
         public static int height = 25;
         public static int width = 100;
+        public static bool hasRan = false;
         static void Main(string[] args)
         {
             List<String> properties = new List<String> { "Keys", "Mobile", "Wallet", "Watch", "Jewlery"};
             List<String> seizedGoods = new List<String>();
             List<String> StolenItems = new List<String>();
             List<Personer> personer = new List<Personer>();
+            bool hasRan = false;
+            bool debug = false;
 
             for(int i = 0; i < 20; i++)
             {
@@ -25,11 +29,44 @@ namespace TjuvOchPolis
             {
                 personer.Add(new Police(Random.Shared.Next(1, width - 2), Random.Shared.Next(1, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), seizedGoods, 0));
             }
-            while (true)
+            while (!debug)
             {
+                Console.Clear();
                 RenderGameBoard();
-                Thread.Sleep(500);
-                Console.ReadKey();
+                Personer.PlaceCitizen(personer, hasRan);
+                Personer.Move(personer, false);
+                //Personer.CollisionCheck(personer, false);
+                hasRan = true;
+
+                Console.SetCursorPosition(0, height);
+                for (int j = 0; j < width + 2; j++)
+                {
+                    if (j == 5)
+                    {
+                        Console.Write(" STATUS ");
+                        j += " STATUS ".Length - 1;
+                    }
+                    else
+                        Console.Write("=");
+                }
+                Console.WriteLine();
+                if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa loopen
+                {
+                    debug = true;
+                    while (debug)
+                    {
+                        Console.Clear();
+                        //Debug.Debugs(personer);
+                        Personer.Move(personer, true);
+                        Console.SetCursorPosition(0, height);
+                        if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd')
+                        {
+                            debug = false;
+                        }
+                        Thread.Sleep(100);
+                    }
+                }
+                Thread.Sleep(100);
             }
 
         }
