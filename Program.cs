@@ -53,7 +53,41 @@
                     }
                 }
 
-                Console.WriteLine();
+                int foundOneCharacter = 0;
+                bool foundOnePerson = false;
+                bool foundOneThief = false;
+                bool foundOneCop = false;
+
+                if (foundOneCharacter == 0)
+                {
+                    Console.Write(" ");
+                }
+
+                else
+                {
+                    if (foundOneCharacter >1)
+                    {
+                        Console.Write("¤");
+                    }
+                    else
+                    {
+                        if (foundOnePerson)
+                        {
+                            Console.Write("C");
+                        }
+                        else if (foundOneThief)
+                        {
+                            Console.Write("T");
+                        }
+                        else if (foundOneCop)
+                        {
+                            Console.Write("P");
+                        }
+
+                    }
+                }
+
+                    Console.WriteLine();
             }
         }
     }
