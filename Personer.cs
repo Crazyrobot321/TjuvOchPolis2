@@ -14,7 +14,7 @@ namespace TjuvOchPolis
         public int DirectionY { get; set; }
         public List<String> Properties{ get; set; }
         
-        public static int maxX = Program.width - 2;
+        public static int maxX = Program.width - 1;
         public static int maxY = Program.height - 2;
         public static int minX = 2;
         public static int minY = 1;
@@ -30,7 +30,7 @@ namespace TjuvOchPolis
 
         
 
-        public static void Move(List<Personer> personer, bool debug)
+        internal static void Move(List<Personer> personer, bool debug)
         {
             foreach (Personer p in personer)
             {
@@ -73,22 +73,9 @@ namespace TjuvOchPolis
                         }
                         else
                         {
-                            medborgare.LocationX += medborgare.DirectionX;
-                            medborgare.LocationY += medborgare.DirectionY;
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write("C");
 
-                            medborgare.LocationX = (medborgare.LocationX + maxX) % maxX;
-                            medborgare.LocationY = (medborgare.LocationY + maxY) % maxY;
-                            
-                            Console.SetCursorPosition(medborgare.LocationX, medborgare.LocationY);
-                            if (debug)
-                            {
-                                Console.Write("");
-                            }
-                            else
-                            {
-                                Console.ForegroundColor = ConsoleColor.Green;
-                                Console.Write("C");
-                            }
                         }
 
                         break;
@@ -126,22 +113,8 @@ namespace TjuvOchPolis
                         }
                         else
                         {
-                            tjuv.LocationX += tjuv.DirectionX;
-                            tjuv.LocationY += tjuv.DirectionY;
-
-                            tjuv.LocationX = (tjuv.LocationX + maxX) % maxX;
-                            tjuv.LocationY = (tjuv.LocationY + maxY) % maxY;
-                            
-                            Console.SetCursorPosition(tjuv.LocationX, tjuv.LocationY);
-                            if (debug)
-                            {
-                                Console.Write("");
-                            }
-                            else
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.Write("T");
-                            }
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("T");
                         }
 
                         break;
@@ -180,23 +153,10 @@ namespace TjuvOchPolis
                         }
                         else
                         {
-                            polis.LocationX += polis.DirectionX;
-                            polis.LocationY += polis.DirectionY;
 
-                            //Håller värderna inom giltliga gränser och gör en pac-man effekt
-                            polis.LocationX = (polis.LocationX + maxX) % maxX;
-                            polis.LocationY = (polis.LocationY + maxY) % maxY;
-                            
-                            Console.SetCursorPosition(polis.LocationX, polis.LocationY);
-                            if (debug)
-                            {
-                                Console.Write("");
-                            }
-                            else
-                            {
-                                Console.ForegroundColor = ConsoleColor.Blue;
-                                Console.Write("P");
-                            }
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.Write("P");
+
                         }
 
                         break;
