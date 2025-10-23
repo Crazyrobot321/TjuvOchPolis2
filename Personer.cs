@@ -87,10 +87,11 @@ namespace TjuvOchPolis
                         break;
                     case Thief tjuv:
                         MovePerson(tjuv, symbol: 'T', color: ConsoleColor.Red, debug: debug);
-
+                        Thief.Steel(personer);
                         break;
                     case Police polis:
                         MovePerson(polis, symbol: 'P', color: ConsoleColor.Blue, debug: debug);
+                        Police.Busted(personer);
                         break;
                     default:
                         break;
@@ -119,10 +120,26 @@ namespace TjuvOchPolis
             HasStolen = hasStolen;
 
         }
-        public void Steel(Citizen citizen)
+        public static void Steel(List<Personer> personer)
         {
-            
+                var tjuvar = personer.OfType<Thief>().ToList();
+                var medborgarna = personer.OfType<Citizen>().ToList();
+                var polis = personer.OfType<Police>().ToList();
+
+            foreach(var tjuv in tjuvar)
+            {
+                foreach(var medborgare in medborgarna)
+                {
+                    if(tjuv.LocationY == medborgare.LocationY && tjuv.LocationX == medborgare.LocationX)
+                    {
+                        Console.WriteLine("Boom");
+                        Console.ReadLine();
+                    }
+                }
+            }
+
         }
+
     }
 
     class Police : Personer
@@ -131,6 +148,24 @@ namespace TjuvOchPolis
         public Police(int locationX, int locationY, int directionX, int directionY, List<String> properties, int caughtThieves) : base(locationX, locationY, directionX, directionY, properties)
         {
             CaughtThieves = caughtThieves;
+        }
+        public static void Busted(List<Personer> personer)
+        {
+            var tjuvar = personer.OfType<Thief>().ToList();
+            var medborgarna = personer.OfType<Citizen>().ToList();
+            var poliser = personer.OfType<Police>().ToList();
+
+            foreach (var polis in poliser)
+            {
+                foreach (var tjuv in tjuvar)
+                {
+                    if (polis.LocationY == tjuv.LocationY && polis.LocationX == tjuv.LocationX)
+                    {
+                        Console.WriteLine("Hittad");
+                        Console.ReadLine();
+                    }
+                }
+            }
         }
     }
 }
