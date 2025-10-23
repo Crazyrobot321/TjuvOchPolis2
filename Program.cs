@@ -11,7 +11,7 @@ namespace TjuvOchPolis
         public static bool hasRan = false;
         static void Main(string[] args)
         {
-            //Skapar instanser av personernas tillhörigheter
+            //Skapar personernas tillhörigheter
             List<String> properties = new List<String>();
             List<String> seizedGoods = new List<String>();
             List<String> StolenItems = new List<String>();
@@ -20,15 +20,27 @@ namespace TjuvOchPolis
             //Skapar personer med slumpmässig placering inom spelplanen och slumpmässig riktning
             for(int i = 0; i < 20; i++)
             {
-                personer.Add(new Citizen(Random.Shared.Next(3, width - 2), Random.Shared.Next(3, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), properties));
+                int posX = Random.Shared.Next(3, width - 2);
+                int posY = Random.Shared.Next(3, height - 2);
+                int dirX = Random.Shared.Next(-1, 2);
+                int dirY = Random.Shared.Next(-1, 2);
+                personer.Add(new Citizen(posX, posY, dirX, dirY, properties));
             }
             for(int i = 0; i < 10; i++)
             {
-                personer.Add(new Thief(Random.Shared.Next(3, width - 2), Random.Shared.Next(3, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), StolenItems, false));
+                int posX = Random.Shared.Next(3, width - 2);
+                int posY = Random.Shared.Next(3, height - 2);
+                int dirX = Random.Shared.Next(-1, 2);
+                int dirY = Random.Shared.Next(-1, 2);
+                personer.Add(new Thief(posX, posY, dirX, dirY, StolenItems, false));
             }
             for(int i = 0; i < 4; i++)
             {
-                personer.Add(new Police(Random.Shared.Next(3, width - 2), Random.Shared.Next(3, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), seizedGoods, 0));
+                int posX = Random.Shared.Next(3, width - 2);
+                int posY = Random.Shared.Next(3, height - 2);
+                int dirX = Random.Shared.Next(-1, 2);
+                int dirY = Random.Shared.Next(-1, 2);
+                personer.Add(new Police(posX, posY, dirX, dirY, seizedGoods, 0));
             }
             //Medans debug boolen är falsk loopar programmet
             while (debug == false)

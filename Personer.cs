@@ -28,7 +28,52 @@ namespace TjuvOchPolis
             Properties = properties;
         }
 
-        
+        private static void MovePerson(Personer personer, char symbol, ConsoleColor color, bool debug)
+        {
+            //int RndX = Random.Shared.Next(0, 100);
+            //int RndY = Random.Shared.Next(0, 100);
+
+            ////Om slumpmässiga talet är under 10 finns chans att byta direktion
+            //if (RndX <= 10)
+            //{
+            //    personer.DirectionX = Random.Shared.Next(-1, 2);
+            //}
+            //if (RndY <= 10)
+            //{
+            //    personer.DirectionY = Random.Shared.Next(-1, 2);
+            //}
+
+            personer.LocationX += personer.DirectionX;
+            personer.LocationY += personer.DirectionY;
+
+
+            //Om personens location når mer/mindre än minX & maxX återställs location till respektive fall
+            if (personer.LocationX < minX)
+                personer.LocationX = maxX;
+
+            else if (personer.LocationX > maxX)
+                personer.LocationX = minX;
+            //Om personens location når mer/mindre än minY & maxY återställs location till respektive fall
+
+            if (personer.LocationY < minY)
+                personer.LocationY = maxY;
+
+            else if (personer.LocationY > maxY)
+                personer.LocationY = minY;
+
+            Console.SetCursorPosition(personer.LocationX, personer.LocationY);
+            if (debug)
+            {
+                Console.Write("");
+            }
+            else
+            {
+                Console.ForegroundColor = color;
+                Console.Write(symbol);
+
+            }
+
+        }
 
         internal static void Move(List<Personer> personer, bool debug)
         {
@@ -37,132 +82,15 @@ namespace TjuvOchPolis
                 switch (p)
                 {
                     case Citizen medborgare:
-                        int RndX = Random.Shared.Next(0, 100);
-                        int RndY = Random.Shared.Next(0, 100);
 
-                        //Om slumpmässiga talet är under 10 finns chans att byta direktion
-                        if (RndX <= 10)
-                        {
-                            medborgare.DirectionX = Random.Shared.Next(-1, 2);
-                            continue;
-                        }
-                        if (RndY <= 10)
-                        {
-                            medborgare.DirectionY = Random.Shared.Next(-1, 2);
-                            continue;
-                        }
-
-                        medborgare.LocationX += medborgare.DirectionX;
-                        medborgare.LocationY += medborgare.DirectionY;
-
-
-                        //Om personens location når mer/mindre än minX & maxX återställs location till respektive fall
-                        if (medborgare.LocationX < minX)
-                            medborgare.LocationX = maxX;
-
-                        else if (medborgare.LocationX > maxX)
-                            medborgare.LocationX = minX;
-                        //Om personens location når mer/mindre än minY & maxY återställs location till respektive fall
-
-                        if (medborgare.LocationY < minY)
-                            medborgare.LocationY = maxY;
-
-                        else if (medborgare.LocationY > maxY)
-                            medborgare.LocationY = minY;
-
-                        Console.SetCursorPosition(medborgare.LocationX, medborgare.LocationY);
-                        if (debug)
-                        {
-                            Console.Write("");
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write("C");
-
-                        }
-
+                        MovePerson(medborgare, symbol:'C', color:ConsoleColor.Green, debug: debug);
                         break;
                     case Thief tjuv:
-                        int RndX2 = Random.Shared.Next(0, 100);
-                        int RndY2 = Random.Shared.Next(0, 100);
-                        if (RndX2 <= 5)
-                        {
-                            tjuv.DirectionX = Random.Shared.Next(-1, 2);
-                        }
-                        if (RndY2 <= 5)
-                        {
-                            tjuv.DirectionY = Random.Shared.Next(-1, 2);
-                        }
-
-                        tjuv.LocationX += tjuv.DirectionX;
-                        tjuv.LocationY += tjuv.DirectionY;
-
-                        if (tjuv.LocationX < minX)
-                            tjuv.LocationX = maxX;
-
-                        else if (tjuv.LocationX > maxX)
-                            tjuv.LocationX = minX;
-
-                        if (tjuv.LocationY < minY)
-                            tjuv.LocationY = maxY;
-
-                        else if (tjuv.LocationY > maxY)
-                            tjuv.LocationY = minY;
-
-                        Console.SetCursorPosition(tjuv.LocationX, tjuv.LocationY);
-                        if (debug)
-                        {
-                            Console.Write("");
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("T");
-                        }
+                        MovePerson(tjuv, symbol: 'T', color: ConsoleColor.Red, debug: debug);
 
                         break;
                     case Police polis:
-                        int RndX3 = Random.Shared.Next(0, 100);
-                        int RndY3 = Random.Shared.Next(0, 100);
-                        if (RndX3 <= 3)
-                        {
-                            polis.DirectionX = Random.Shared.Next(-1, 2);
-                        }
-                        if (RndY3 <= 3)
-                        {
-                            polis.DirectionY = Random.Shared.Next(-1, 2);
-                        }
-
-                        polis.LocationX += polis.DirectionX;
-                        polis.LocationY += polis.DirectionY;
-
-                        //Håller värderna inom giltliga gränser och gör en pac-man effekt
-                        if (polis.LocationX < minX)
-                            polis.LocationX = maxX;
-
-                        else if (polis.LocationX > maxX)
-                            polis.LocationX = minX;
-
-                        if (polis.LocationY < minY)
-                            polis.LocationY = maxY;
-
-                        else if (polis.LocationY > maxY)
-                            polis.LocationY = minY;
-
-                        Console.SetCursorPosition(polis.LocationX, polis.LocationY);
-                        if (debug)
-                        {
-                            Console.Write("");
-                        }
-                        else
-                        {
-
-                            Console.ForegroundColor = ConsoleColor.Blue;
-                            Console.Write("P");
-
-                        }
-
+                        MovePerson(polis, symbol: 'P', color: ConsoleColor.Blue, debug: debug);
                         break;
                     default:
                         break;
@@ -189,6 +117,11 @@ namespace TjuvOchPolis
         public Thief(int locationX, int locationY, int directionX, int directionY, List<String> properties, bool hasStolen) : base(locationX, locationY, directionX, directionY, properties)
         {
             HasStolen = hasStolen;
+
+        }
+        public void Steel(Citizen citizen)
+        {
+            
         }
     }
 
