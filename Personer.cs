@@ -82,7 +82,6 @@ namespace TjuvOchPolis
                 switch (p)
                 {
                     case Citizen medborgare:
-
                         MovePerson(medborgare, symbol:'C', color:ConsoleColor.Green, debug: debug);
                         break;
                     case Thief tjuv:
@@ -107,8 +106,7 @@ namespace TjuvOchPolis
     {
         public Citizen(int locationX, int locationY,int directionX,int directionY, List<String> properties) : base(locationX,locationY,directionX,directionY,properties)
         {
-            properties.AddRange("Keys", "Mobile", "Wallet", "Watch", "Jewlery");
-
+            //properties.AddRange("Keys", "Mobile", "Wallet", "Watch", "Jewlery");
         }
     }
 
@@ -130,10 +128,18 @@ namespace TjuvOchPolis
             {
                 foreach(var medborgare in medborgarna)
                 {
-                    if(tjuv.LocationY == medborgare.LocationY && tjuv.LocationX == medborgare.LocationX)
+                    if (tjuv.LocationY == medborgare.LocationY && tjuv.LocationX == medborgare.LocationX)
                     {
-                        Console.WriteLine("Boom");
-                        Console.ReadLine();
+                        //int test = medborgare.Properties.Count;
+                        //int rnd = Random.Shared.Next(test);
+                        //tjuv.Properties.Add(medborgare.Properties[rnd]);
+                        //medborgare.Properties.RemoveAt(rnd);
+                        //foreach(var item in tjuv.Properties)
+                        //{
+                        //    Console.SetCursorPosition(0, Program.height);
+                        //    Console.WriteLine($"En tjuv stal {item}");
+                        //}
+                        //Console.ReadLine();
                     }
                 }
             }
@@ -159,11 +165,16 @@ namespace TjuvOchPolis
             {
                 foreach (var tjuv in tjuvar)
                 {
-                    if (polis.LocationY == tjuv.LocationY && polis.LocationX == tjuv.LocationX)
-                    {
-                        Console.WriteLine("Hittad");
-                        Console.ReadLine();
-                    }
+                    //if (polis.LocationY == tjuv.LocationY && polis.LocationX == tjuv.LocationX && tjuv.HasStolen == true)
+                    //{
+                    //    Console.WriteLine("Hittad");
+                    //    Console.ReadLine();
+                    //}
+                    //else if(polis.LocationY == tjuv.LocationY && polis.LocationX == tjuv.LocationX && tjuv.HasStolen == false)
+                    //{
+                    //    Console.WriteLine("YEPPERS");
+                    //    Console.ReadLine();
+                    //}
                 }
             }
         }

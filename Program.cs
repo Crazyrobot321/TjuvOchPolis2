@@ -12,7 +12,8 @@ namespace TjuvOchPolis
         static void Main(string[] args)
         {
             //Skapar personernas tillhörigheter
-            List<String> properties = new List<String>();
+            List<String> properties = new List<String> {"Keys", "Mobile", "Wallet", "Watch", "Jewlery"};
+            ;
             List<String> seizedGoods = new List<String>();
             List<String> StolenItems = new List<String>();
             List<Personer> personer = new List<Personer>();
@@ -69,7 +70,7 @@ namespace TjuvOchPolis
                     while (debug)
                     {
                         Console.Clear();
-                        //Debug.Debugs(personer);
+                        Debugging.Debugs(personer);
                         Personer.Move(personer, true);
                         Console.SetCursorPosition(0, height);
                         if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa och sätter bool debug till false
