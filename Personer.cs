@@ -40,6 +40,7 @@ namespace TjuvOchPolis
                         int RndX = Random.Shared.Next(0, 100);
                         int RndY = Random.Shared.Next(0, 100);
 
+                        //Om slumpmässiga talet är under 10 finns chans att byta direktion
                         if (RndX <= 10)
                         {
                             medborgare.DirectionX = Random.Shared.Next(-1, 2);
@@ -54,11 +55,14 @@ namespace TjuvOchPolis
                         medborgare.LocationX += medborgare.DirectionX;
                         medborgare.LocationY += medborgare.DirectionY;
 
+
+                        //Om personens location når mer/mindre än minX & maxX återställs location till respektive fall
                         if (medborgare.LocationX < minX)
                             medborgare.LocationX = maxX;
 
                         else if (medborgare.LocationX > maxX)
                             medborgare.LocationX = minX;
+                        //Om personens location når mer/mindre än minY & maxY återställs location till respektive fall
 
                         if (medborgare.LocationY < minY)
                             medborgare.LocationY = maxY;
@@ -174,7 +178,8 @@ namespace TjuvOchPolis
     {
         public Citizen(int locationX, int locationY,int directionX,int directionY, List<String> properties) : base(locationX,locationY,directionX,directionY,properties)
         {
-            
+            properties.AddRange("Keys", "Mobile", "Wallet", "Watch", "Jewlery");
+
         }
     }
 

@@ -5,18 +5,19 @@ namespace TjuvOchPolis
 {
     internal class Program
     {
+        //CITY
         public static int height = 25;
         public static int width = 100;
         public static bool hasRan = false;
         static void Main(string[] args)
         {
-            List<String> properties = new List<String> { "Keys", "Mobile", "Wallet", "Watch", "Jewlery"};
+            //Skapar instanser av personernas tillhörigheter
+            List<String> properties = new List<String>();
             List<String> seizedGoods = new List<String>();
             List<String> StolenItems = new List<String>();
             List<Personer> personer = new List<Personer>();
-            bool hasRan = false;
             bool debug = false;
-
+            //Skapar personer med slumpmässig placering inom spelplanen och slumpmässig riktning
             for(int i = 0; i < 20; i++)
             {
                 personer.Add(new Citizen(Random.Shared.Next(3, width - 2), Random.Shared.Next(3, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), properties));
@@ -29,15 +30,15 @@ namespace TjuvOchPolis
             {
                 personer.Add(new Police(Random.Shared.Next(3, width - 2), Random.Shared.Next(3, height - 2), Random.Shared.Next(-1, 2), Random.Shared.Next(-1, 2), seizedGoods, 0));
             }
-            while (!debug)
+            //Medans debug boolen är falsk loopar programmet
+            while (debug == false)
             {
                 Console.Clear();
                 RenderGameBoard();
                 Personer.Move(personer, false);
                 //Personer.CollisionCheck(personer, false);
-                hasRan = true;
 
-                Console.SetCursorPosition(0, height);
+                Console.SetCursorPosition(0, height); //Nollar positionen av cursorn
                 for (int row = 0; row < width + 2; row++)
                 {
                     if (row == 5)
@@ -49,18 +50,19 @@ namespace TjuvOchPolis
                         Console.Write("=");
                 }
                 Console.WriteLine();
-                if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa loopen
+                if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa loopen och sätter bool debug = true
                 {
                     debug = true;
+                    //Medans debug är true loopar programmet men skriver inte ut staden och skriver ut personernas information
                     while (debug)
                     {
                         Console.Clear();
                         //Debug.Debugs(personer);
                         Personer.Move(personer, true);
                         Console.SetCursorPosition(0, height);
-                        if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd')
+                        if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa och sätter bool debug till false
                         {
-                            debug = false;
+                            debug = false; //Fortsätter "main" loopen
                         }
                         Thread.Sleep(1000);
                     }
@@ -85,7 +87,7 @@ namespace TjuvOchPolis
                     var isFirstRow = row == 0;
                     var isLastRow = row == gameWidth - 1;
 
-                    if (isFirstLine|| isLastLine)
+                    if (isFirstLine || isLastLine)
                     {
                         if (isFirstLine && row == 5)
                         {
