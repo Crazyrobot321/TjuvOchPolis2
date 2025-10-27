@@ -25,7 +25,7 @@ namespace TjuvOchPolis
             LocationY = locationY;
             DirectionX = directionX;
             DirectionY = directionY;
-            Properties = properties;
+            Properties = new List<string>(properties); //Skapar en ny lista med samma innehåll så att varje person får sin egen kopia av listan (inte delar samma referens)
         }
 
         private static void MovePerson(Personer personer, char symbol, ConsoleColor color, bool debug)
@@ -120,26 +120,29 @@ namespace TjuvOchPolis
         }
         public static void Steel(List<Personer> personer)
         {
-                var tjuvar = personer.OfType<Thief>().ToList();
-                var medborgarna = personer.OfType<Citizen>().ToList();
-                var polis = personer.OfType<Police>().ToList();
+            var tjuvar = personer.OfType<Thief>(); //Filtrerar listan och tar bara med objekt som är av typen Thief
+            var medborgarna = personer.OfType<Citizen>();
 
-            foreach(var tjuv in tjuvar)
+            foreach (var tjuv in tjuvar)
             {
                 foreach(var medborgare in medborgarna)
                 {
                     if (tjuv.LocationY == medborgare.LocationY && tjuv.LocationX == medborgare.LocationX)
                     {
-                        //int test = medborgare.Properties.Count;
-                        //int rnd = Random.Shared.Next(test);
-                        //tjuv.Properties.Add(medborgare.Properties[rnd]);
-                        //medborgare.Properties.RemoveAt(rnd);
-                        //foreach(var item in tjuv.Properties)
-                        //{
-                        //    Console.SetCursorPosition(0, Program.height);
-                        //    Console.WriteLine($"En tjuv stal {item}");
-                        //}
-                        //Console.ReadLine();
+                        int test = medborgare.Properties.Count;
+                        int rnd = Random.Shared.Next(test);
+                        if(medborgare.Properties.Count == 0)
+                        {
+                            break;
+                        }
+                        tjuv.Properties.Add(medborgare.Properties[rnd]);
+                        medborgare.Properties.RemoveAt(rnd);
+                        foreach (var item in tjuv.Properties)
+                        {
+                            Console.SetCursorPosition(0, Program.height + 2);
+                            Console.WriteLine($"En tjuv stal {item}");
+                        }
+                        tjuv.HasStolen = true;
                     }
                 }
             }
@@ -157,24 +160,24 @@ namespace TjuvOchPolis
         }
         public static void Busted(List<Personer> personer)
         {
-            var tjuvar = personer.OfType<Thief>().ToList();
-            var medborgarna = personer.OfType<Citizen>().ToList();
-            var poliser = personer.OfType<Police>().ToList();
+            var tjuvar = personer.OfType<Thief>();
+            var medborgarna = personer.OfType<Citizen>();
+            var poliser = personer.OfType<Police>();
 
             foreach (var polis in poliser)
             {
                 foreach (var tjuv in tjuvar)
                 {
-                    //if (polis.LocationY == tjuv.LocationY && polis.LocationX == tjuv.LocationX && tjuv.HasStolen == true)
-                    //{
-                    //    Console.WriteLine("Hittad");
-                    //    Console.ReadLine();
-                    //}
-                    //else if(polis.LocationY == tjuv.LocationY && polis.LocationX == tjuv.LocationX && tjuv.HasStolen == false)
-                    //{
-                    //    Console.WriteLine("YEPPERS");
-                    //    Console.ReadLine();
-                    //}
+                    if (polis.LocationY == tjuv.LocationY && polis.LocationX == tjuv.LocationX && tjuv.HasStolen == true)
+                    {
+                        Console.SetCursorPosition(0, Program.height + 2);
+                        Console.WriteLine("Hittad");
+                    }
+                    else if (polis.LocationY == tjuv.LocationY && polis.LocationX == tjuv.LocationX && tjuv.HasStolen == false)
+                    {
+                        Console.SetCursorPosition(0, Program.height + 2);
+                        Console.WriteLine("YEPPERS");
+                    }
                 }
             }
         }

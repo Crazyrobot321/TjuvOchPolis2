@@ -51,17 +51,7 @@ namespace TjuvOchPolis
                 Personer.Move(personer, false);
                 //Personer.CollisionCheck(personer, false);
 
-                Console.SetCursorPosition(0, height); //Nollar positionen av cursorn
-                for (int row = 0; row < width + 2; row++)
-                {
-                    if (row == 5)
-                    {
-                        Console.Write(" STATUS ");
-                        row += " STATUS ".Length - 1;
-                    }
-                    else
-                        Console.Write("=");
-                }
+                Console.SetCursorPosition(0, height + 1); //Nollar positionen av cursorn
                 Console.WriteLine();
                 if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa loopen och sätter bool debug = true
                 {
@@ -72,12 +62,12 @@ namespace TjuvOchPolis
                         Console.Clear();
                         Debugging.Debugs(personer);
                         Personer.Move(personer, true);
-                        Console.SetCursorPosition(0, height);
+                        Console.SetCursorPosition(0, height + 2);
                         if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa och sätter bool debug till false
                         {
                             debug = false; //Fortsätter "main" loopen
                         }
-                        Thread.Sleep(1000);
+                        Thread.Sleep(100);
                     }
                 }
                 Thread.Sleep(100);
