@@ -116,7 +116,6 @@ namespace TjuvOchPolis
         public Thief(int locationX, int locationY, int directionX, int directionY, List<String> properties, bool hasStolen) : base(locationX, locationY, directionX, directionY, properties)
         {
             HasStolen = hasStolen;
-
         }
         public static void Steel(List<Personer> personer)
         {
