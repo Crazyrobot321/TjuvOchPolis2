@@ -70,7 +70,6 @@ namespace TjuvOchPolis
             //spelytan för alla karaktärer ska vara 100x25, därav väggar runt staden
             var gameHeight = height + 2; //102
             var gameWidth = width + 2; // 27
-
             if (!hasRan)
             {
                 for (int line = 0; line < gameHeight; line++)

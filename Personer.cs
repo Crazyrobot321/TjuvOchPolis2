@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -117,9 +118,11 @@ namespace TjuvOchPolis
     class Thief : Personer
     {
         public bool HasStolen { get; set; }
-        public Thief(int locationX, int locationY, int directionX, int directionY, List<String> properties, bool hasStolen) : base(locationX, locationY, directionX, directionY, properties)
+        public bool IsInPrison { get; set; } = false;
+        public Thief(int locationX, int locationY, int directionX, int directionY, List<String> properties, bool hasStolen, bool isinprison) : base(locationX, locationY, directionX, directionY, properties)
         {
             HasStolen = hasStolen;
+            IsInPrison = isinprison;
         }
         public static void Steel(List<Personer> personer)
         {
@@ -163,10 +166,12 @@ namespace TjuvOchPolis
         {
             CaughtThieves = caughtThieves;
         }
+
+        List<Personer> prisonPopulation = new List<Personer>();
+        
         public static void Busted(List<Personer> personer)
         {
             var tjuvar = personer.OfType<Thief>();
-            var medborgarna = personer.OfType<Citizen>();
             var poliser = personer.OfType<Police>();
 
             foreach (var polis in poliser)
@@ -177,6 +182,7 @@ namespace TjuvOchPolis
                     {
                         polis.Properties.AddRange(tjuv.Properties);
                         tjuv.Properties.Clear();
+                        tjuv.IsInPrison = true;
                     }
                 }
             }

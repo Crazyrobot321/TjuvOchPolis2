@@ -33,7 +33,7 @@ namespace TjuvOchPolis
                 int posY = Random.Shared.Next(3, height - 2);
                 int dirX = Random.Shared.Next(-1, 2);
                 int dirY = Random.Shared.Next(-1, 2);
-                personer.Add(new Thief(posX, posY, dirX, dirY, StolenItems, false));
+                personer.Add(new Thief(posX, posY, dirX, dirY, StolenItems, false, false));
             }
             for(int i = 0; i < 4; i++)
             {
@@ -52,7 +52,9 @@ namespace TjuvOchPolis
                 Personer.Move(personer, false);
                 //Personer.CollisionCheck(personer, false);
 
-                Console.SetCursorPosition(0, height + 3); //Nollar positionen av cursorn
+                Console.SetCursorPosition(0, height + 2);
+                Prison.RenderPrison(hasRan, 20, 5);
+                Status();
                 Console.WriteLine();
                 if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa loopen och sätter bool debug = true
                 {
@@ -72,26 +74,7 @@ namespace TjuvOchPolis
                             Thread.Sleep(100);
                     }
                 }
-                if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'p') //för att kolla status i fängelset.
-                { 
-                    hasRan = false;
-                    prisonDebug = true;
-                    debug = true;
-
-                    while (prisonDebug)
-                    {
-                        Console.Clear();
-                        Prison.RenderPrison(hasRan, 10, 10);
-                        Console.SetCursorPosition(0, height + 2);
-
-                        if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'p')
-                        {
-                            prisonDebug = false; //Fortsätter "main" loopen
-                            debug = false;
-                        }
-                    }
-                    
-                }
+                
                    
                 hasRan = true;
                 Thread.Sleep(100);
@@ -99,9 +82,31 @@ namespace TjuvOchPolis
 
         }
 
-        //private static void RenderGameBoard(bool hasRun)
-        //{
-            
-        //}
+        public static void Status()
+        {
+            for (int j = 0; j < width + 2; j++)
+            {
+
+                if (j == 5)
+
+                {
+
+                    Console.Write(" STATUS ");
+
+                    j += " STATUS ".Length - 1;
+
+                }
+
+                else
+
+                    Console.Write("=");
+
+            }
+
+
+
+
+
+        }
     }
 }
