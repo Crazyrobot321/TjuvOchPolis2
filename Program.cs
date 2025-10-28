@@ -45,6 +45,7 @@ namespace TjuvOchPolis
             }
             Console.ReadLine();
             //Medans debug boolen är falsk loopar programmet
+            bool prisonDebug = false;
             while (debug == false)
             {
                 City.RenderGameBoard(hasRan,100,25);
@@ -67,10 +68,31 @@ namespace TjuvOchPolis
                         {
                             debug = false; //Fortsätter "main" loopen
                         }
-                        Thread.Sleep(100);
+                       
+                            Thread.Sleep(100);
                     }
                 }
-                Prison.RenderPrison(hasRan, 10, 10);
+                if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'p') //för att kolla status i fängelset.
+                { 
+                    hasRan = false;
+                    prisonDebug = true;
+                    debug = true;
+
+                    while (prisonDebug)
+                    {
+                        Console.Clear();
+                        Prison.RenderPrison(hasRan, 10, 10);
+                        Console.SetCursorPosition(0, height + 2);
+
+                        if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'p')
+                        {
+                            prisonDebug = false; //Fortsätter "main" loopen
+                            debug = false;
+                        }
+                    }
+                    
+                }
+                   
                 hasRan = true;
                 Thread.Sleep(100);
             }
