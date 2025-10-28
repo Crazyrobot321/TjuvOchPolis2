@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace TjuvOchPolis
 {
@@ -13,7 +14,6 @@ namespace TjuvOchPolis
         {
             //Skapar personernas tillhörigheter
             List<String> properties = new List<String> {"Keys", "Mobile", "Wallet", "Watch", "Jewlery"};
-            ;
             List<String> seizedGoods = new List<String>();
             List<String> StolenItems = new List<String>();
             List<Personer> personer = new List<Personer>();
@@ -46,8 +46,8 @@ namespace TjuvOchPolis
             //Medans debug boolen är falsk loopar programmet
             while (debug == false)
             {
-                Console.Clear();
-                RenderGameBoard();
+                RenderGameBoard(hasRan);
+                hasRan = true;
                 Personer.Move(personer, false);
                 //Personer.CollisionCheck(personer, false);
 
@@ -75,47 +75,52 @@ namespace TjuvOchPolis
 
         }
 
-        private static void RenderGameBoard()
+        private static void RenderGameBoard(bool hasRun)
         {
             //spelytan för alla karaktärer ska vara 100x25, därav väggar runt staden
             var gameHeight = height + 2; //102
             var gameWidth = width + 2; // 27
 
-            for (int line = 0; line < gameHeight; line++)
+            if(!hasRun)
             {
-                for (int row = 0; row < width+2; row++)
+                for (int line = 0; line < gameHeight; line++)
                 {
-                    var isFirstLine = line == 0;
-                    var isLastLine = line == gameHeight - 1;
-                    var isFirstRow = row == 0;
-                    var isLastRow = row == gameWidth - 1;
-
-                    if (isFirstLine || isLastLine)
+                    for (int row = 0; row < width + 2; row++)
                     {
-                        if (isFirstLine && row == 5)
+                        var isFirstLine = line == 0;
+                        var isLastLine = line == gameHeight - 1;
+                        var isFirstRow = row == 0;
+                        var isLastRow = row == gameWidth - 1;
+
+                        if (isFirstLine || isLastLine)
                         {
-                            var headline = " CITY ";
-                            Console.Write(headline);
-                            row += headline.Length - 1;
+                            if (isFirstLine && row == 5)
+                            {
+                                var headline = " CITY ";
+                                Console.Write(headline);
+                                row += headline.Length - 1;
+                            }
+                            else
+                            {
+                                Console.Write("=");
+                            }
+                        }
+
+
+                        else if (isFirstRow || isLastRow)
+                        {
+                            Console.Write("||");
                         }
                         else
                         {
-                            Console.Write("=");
+                            Console.Write(" ");
                         }
                     }
-
-
-                    else if (isFirstRow || isLastRow)
-                    {
-                        Console.Write("||");
-                    }
-                    else
-                    {
-                        Console.Write(" ");
-                    }
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
             }
+            else
+                Console.WriteLine();
         }
     }
 }

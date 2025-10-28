@@ -14,8 +14,8 @@ namespace TjuvOchPolis
         public int DirectionY { get; set; }
         public List<String> Properties{ get; set; }
         
-        public static int maxX = Program.width - 1;
-        public static int maxY = Program.height - 2;
+        public static int maxX = Program.width + 1;
+        public static int maxY = Program.height;
         public static int minX = 2;
         public static int minY = 1;
 
@@ -28,20 +28,24 @@ namespace TjuvOchPolis
             Properties = new List<string>(properties); //Skapar en ny lista med samma innehåll så att varje person får sin egen kopia av listan (inte delar samma referens)
         }
 
-        private static void MovePerson(Personer personer, char symbol, ConsoleColor color, bool debug)
+        private static void MovePerson(Personer personer, char symbol, ConsoleColor color, bool debug, int randomChance)
         {
-            //int RndX = Random.Shared.Next(0, 100);
-            //int RndY = Random.Shared.Next(0, 100);
+            int RndX = Random.Shared.Next(0, 100);
+            int RndY = Random.Shared.Next(0, 100);
 
-            ////Om slumpmässiga talet är under 10 finns chans att byta direktion
-            //if (RndX <= 10)
-            //{
-            //    personer.DirectionX = Random.Shared.Next(-1, 2);
-            //}
-            //if (RndY <= 10)
-            //{
-            //    personer.DirectionY = Random.Shared.Next(-1, 2);
-            //}
+            //Om slumpmässiga talet är under 10 finns chans att byta direktion
+            if (RndX <= randomChance)
+            {
+                personer.DirectionX = Random.Shared.Next(-1, 2);
+            }
+            if (RndY <= randomChance)
+            {
+                personer.DirectionY = Random.Shared.Next(-1, 2);
+            }
+
+            //Tar bort föregående symbol av respektive person
+            Console.SetCursorPosition(personer.LocationX, personer.LocationY);
+            Console.WriteLine(" ");
 
             personer.LocationX += personer.DirectionX;
             personer.LocationY += personer.DirectionY;
@@ -70,8 +74,8 @@ namespace TjuvOchPolis
             {
                 Console.ForegroundColor = color;
                 Console.Write(symbol);
-
             }
+            
 
         }
 
@@ -82,14 +86,14 @@ namespace TjuvOchPolis
                 switch (p)
                 {
                     case Citizen medborgare:
-                        MovePerson(medborgare, symbol:'C', color:ConsoleColor.Green, debug: debug);
+                        MovePerson(medborgare, symbol: 'C', color: ConsoleColor.Green, debug: debug, randomChance: 10);
                         break;
                     case Thief tjuv:
-                        MovePerson(tjuv, symbol: 'T', color: ConsoleColor.Red, debug: debug);
+                        MovePerson(tjuv, symbol: 'T', color: ConsoleColor.Red, debug: debug, randomChance: 10);
                         Thief.Steel(personer);
                         break;
                     case Police polis:
-                        MovePerson(polis, symbol: 'P', color: ConsoleColor.Blue, debug: debug);
+                        MovePerson(polis, symbol: 'P', color: ConsoleColor.Blue, debug: debug, randomChance: 10);
                         Police.Busted(personer);
                         break;
                     default:
@@ -171,6 +175,8 @@ namespace TjuvOchPolis
                     {
                         Console.SetCursorPosition(0, Program.height + 2);
                         Console.WriteLine("Hittad");
+                        polis.Properties.AddRange(tjuv.Properties);
+                        tjuv.Properties.Clear();
                     }
                     else if (polis.LocationY == tjuv.LocationY && polis.LocationX == tjuv.LocationX && tjuv.HasStolen == false)
                     {
