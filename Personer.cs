@@ -17,7 +17,7 @@ namespace TjuvOchPolis
         public static int maxX = Program.width + 1;
         public static int maxY = Program.height;
         public static int minX = 2;
-        public static int minY = 1;
+        public static int minY = 2;
 
         public Personer(int locationX, int locationY, int directionX, int directionY, List<String>properties)
         {
@@ -140,11 +140,13 @@ namespace TjuvOchPolis
                         }
                         tjuv.Properties.Add(medborgare.Properties[rnd]);
                         medborgare.Properties.RemoveAt(rnd);
-                        foreach (var item in tjuv.Properties)
-                        {
-                            Console.SetCursorPosition(0, Program.height + 2);
-                            Console.WriteLine($"En tjuv stal {item}");
-                        }
+                        //foreach (var item in tjuv.Properties)
+                        //{
+                        //    Console.SetCursorPosition(0, Program.height + 2);
+                        //    Console.WriteLine($"\nEn tjuv stal {item}");
+                        //    Thread.Sleep(100);
+                        //    Console.Write(" ");
+                        //}
                         tjuv.HasStolen = true;
                     }
                 }
@@ -173,15 +175,8 @@ namespace TjuvOchPolis
                 {
                     if (polis.LocationY == tjuv.LocationY && polis.LocationX == tjuv.LocationX && tjuv.HasStolen == true)
                     {
-                        Console.SetCursorPosition(0, Program.height + 2);
-                        Console.WriteLine("Hittad");
                         polis.Properties.AddRange(tjuv.Properties);
                         tjuv.Properties.Clear();
-                    }
-                    else if (polis.LocationY == tjuv.LocationY && polis.LocationX == tjuv.LocationX && tjuv.HasStolen == false)
-                    {
-                        Console.SetCursorPosition(0, Program.height + 2);
-                        Console.WriteLine("YEPPERS");
                     }
                 }
             }

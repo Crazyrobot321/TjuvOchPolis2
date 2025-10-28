@@ -43,15 +43,15 @@ namespace TjuvOchPolis
                 int dirY = Random.Shared.Next(-1, 2);
                 personer.Add(new Police(posX, posY, dirX, dirY, seizedGoods, 0));
             }
+            Console.ReadLine();
             //Medans debug boolen är falsk loopar programmet
             while (debug == false)
             {
-                RenderGameBoard(hasRan);
-                hasRan = true;
+                City.RenderGameBoard(hasRan,100,25);
                 Personer.Move(personer, false);
                 //Personer.CollisionCheck(personer, false);
 
-                Console.SetCursorPosition(0, height + 1); //Nollar positionen av cursorn
+                Console.SetCursorPosition(0, height + 3); //Nollar positionen av cursorn
                 Console.WriteLine();
                 if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa loopen och sätter bool debug = true
                 {
@@ -70,57 +70,16 @@ namespace TjuvOchPolis
                         Thread.Sleep(100);
                     }
                 }
+                Prison.RenderPrison(hasRan, 10, 10);
+                hasRan = true;
                 Thread.Sleep(100);
             }
 
         }
 
-        private static void RenderGameBoard(bool hasRun)
-        {
-            //spelytan för alla karaktärer ska vara 100x25, därav väggar runt staden
-            var gameHeight = height + 2; //102
-            var gameWidth = width + 2; // 27
-
-            if(!hasRun)
-            {
-                for (int line = 0; line < gameHeight; line++)
-                {
-                    for (int row = 0; row < width + 2; row++)
-                    {
-                        var isFirstLine = line == 0;
-                        var isLastLine = line == gameHeight - 1;
-                        var isFirstRow = row == 0;
-                        var isLastRow = row == gameWidth - 1;
-
-                        if (isFirstLine || isLastLine)
-                        {
-                            if (isFirstLine && row == 5)
-                            {
-                                var headline = " CITY ";
-                                Console.Write(headline);
-                                row += headline.Length - 1;
-                            }
-                            else
-                            {
-                                Console.Write("=");
-                            }
-                        }
-
-
-                        else if (isFirstRow || isLastRow)
-                        {
-                            Console.Write("||");
-                        }
-                        else
-                        {
-                            Console.Write(" ");
-                        }
-                    }
-                    Console.WriteLine();
-                }
-            }
-            else
-                Console.WriteLine();
-        }
+        //private static void RenderGameBoard(bool hasRun)
+        //{
+            
+        //}
     }
 }
