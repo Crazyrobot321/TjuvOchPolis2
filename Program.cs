@@ -19,8 +19,9 @@ namespace TjuvOchPolis
             List<String> properties = new List<String> {"Keys", "Mobile", "Wallet", "Watch", "Jewlery"};
             List<String> seizedGoods = new List<String>();
             List<String> StolenItems = new List<String>();
-            List<Personer> personer = new List<Personer>();
+            List<Person> personer = new List<Person>();
             bool debug = false;
+
             //Skapar personer med slumpmässig placering inom spelplanen och slumpmässig riktning
             for(int i = 0; i < 20; i++)
             {
@@ -50,18 +51,28 @@ namespace TjuvOchPolis
             //Medans debug boolen är falsk loopar programmet
             while (debug == false)
             {
+                //Console.Clear();
+
+                Console.SetCursorPosition(0, 0);
                 City.RenderGameBoard(hasRan,100,25);
-                Personer.Move(personer, false);
-               
-                Console.SetCursorPosition(0, height + 3);
+
                 Prison.RenderPrison(hasRan, 20, 5);
-                Console.SetCursorPosition(0, height + 10);
-                Status(personer);
-                Console.WriteLine();
-                NewsFeed();
-                Console.WriteLine();
-                
-                hasRan = true;
+               
+
+                MovementHelper.MovePersons(personer, false);
+                Console.SetCursorPosition(0, height + 9); //nedanför fängelset
+
+                Console.WriteLine(); // sätter new line för at slippa flytta cursor
+
+                // Status och newsfeed får inte renderas som dom gör då dom fyller på listan nedan, dom måste ersättas
+
+                //Status(personer);
+               // Console.WriteLine();  // sätter new line för at slippa flytta cursor
+               // NewsFeed();
+
+               
+
+                 hasRan = true;
                 if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa loopen och sätter bool debug = true
                 {
                     debug = true;
@@ -70,7 +81,7 @@ namespace TjuvOchPolis
                     {
                         Console.Clear();
                         Debugging.Debugs(personer);
-                        Personer.Move(personer, true);
+                       // MovementHelper.MovePersons(personer, true);
                         Console.SetCursorPosition(0, height + 3);
                         if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa och sätter bool debug till false
                         {
@@ -80,13 +91,13 @@ namespace TjuvOchPolis
                         }
                         Thread.Sleep(100);
                     }
-                }                   
-                Thread.Sleep(100);
+                }
+            Thread.Sleep(100);
             }
 
         }
 
-        public static void Status(List<Personer> personer)
+        public static void Status(List<Person> personer)
         {
             for (int j = 0; j < width + 2; j++)
             {
@@ -104,10 +115,7 @@ namespace TjuvOchPolis
             Console.WriteLine($"\nDet finns {Citizens.Count<Citizen>()} medborgare");
             Console.WriteLine($"\nDet finns {Thieves.Count<Thief>()} av {Thieves.Count<Thief>()} tjuvar");
             Console.WriteLine($"\nDet finns {Coppers.Count<Police>()} poliser");
-            for(int j = 0;j < width + 2;j++)
-            {
-                Console.Write("=");
-            }
+          
         }
         public static void NewsFeed()
         {

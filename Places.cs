@@ -62,8 +62,8 @@ namespace TjuvOchPolis
                     Console.WriteLine();
                 }
             }
-            else
-                Console.WriteLine();
+           // else
+               // Console.WriteLine();
         }
         internal static void RenderPrison(bool hasRan, int width, int height)
         {
@@ -108,8 +108,8 @@ namespace TjuvOchPolis
                     Console.WriteLine();
                 }
             }
-            else
-                Console.WriteLine();
+            //else
+           //     Console.WriteLine();
         }
     }
 

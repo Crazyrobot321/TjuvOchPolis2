@@ -8,11 +8,11 @@ namespace TjuvOchPolis
 {
     internal class Debugging
     {
-        public static void Debugs(List<Personer> personer)
+        public static void Debugs(List<Person> personer)
         {
             for (int i = 0; i < personer.Count; i++)
             {
-                Personer p = personer[i];
+                Person p = personer[i];
                 Console.WriteLine($"{p.GetType().Name} befinner sig vid ({p.LocationX}) ({p.LocationY}) och går mot riktningen ({p.DirectionX})({p.DirectionY}) och har {string.Join(", ", p.Properties)}");
             }
         }
