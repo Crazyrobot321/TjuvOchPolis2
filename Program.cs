@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
@@ -10,6 +11,7 @@ namespace TjuvOchPolis
         public static int height = 25;
         public static int width = 100;
         public static bool hasRan = false;
+        public static Queue queue = new Queue();
         static void Main(string[] args)
         {
             //Skapar personernas tillhörigheter
@@ -52,6 +54,8 @@ namespace TjuvOchPolis
 
                 Console.SetCursorPosition(0, height + 3);
                 Status(personer);
+                Console.WriteLine();
+                NewsFeed();
                 Console.WriteLine();
                 Prison.RenderPrison(hasRan, 20, 5);
                 hasRan = true;
@@ -101,6 +105,32 @@ namespace TjuvOchPolis
             {
                 Console.Write("=");
             }
+        }
+        public static void NewsFeed()
+        {
+            for (int j = 0; j < width + 2; j++)
+            {
+                if (j == 5)
+                {
+                    Console.Write(" NEWSFEED ");
+                    j += " NEWSFEED ".Length - 1;
+                }
+                else
+                    Console.Write("=");
+            }
+            Console.WriteLine();
+            if(queue.Count > 5)
+            {
+                queue.Clear();
+            }
+            else
+            {
+                foreach (var item in queue)
+                {
+                    queue.Peek();
+                }
+            }
+
         }
     }
 }

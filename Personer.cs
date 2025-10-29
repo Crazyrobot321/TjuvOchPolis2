@@ -155,7 +155,7 @@ namespace TjuvOchPolis
                     thief.Properties.Add(medborgare.Properties[rnd]);
                     medborgare.Properties.RemoveAt(rnd);
                     thief.HasStolen = true;
-
+                    Program.queue.Enqueue("En tjuv har stulit något!");
                     // Stop after stealing a single item from the first matching citizen
                     break;
                 }
@@ -176,6 +176,7 @@ namespace TjuvOchPolis
         {
             var tjuvar = personer.OfType<Thief>();
             var poliser = personer.OfType<Police>();
+            var medborgare = personer.OfType<Citizen>();
 
             foreach (var polis in poliser)
             {
@@ -186,6 +187,19 @@ namespace TjuvOchPolis
                         polis.Properties.AddRange(tjuv.Properties);
                         tjuv.Properties.Clear();
                         tjuv.IsInPrison = true;
+                        Program.queue.Enqueue("Polisen haffar en skurk!");
+                    }
+                    else if(polis.LocationY == tjuv.LocationY && polis.LocationX == tjuv.LocationX && tjuv.HasStolen == false)
+                    {
+                        Program.queue.Enqueue("Polisen möter en tjuv!");
+                    }
+                }
+
+                foreach(var person in medborgare)
+                {
+                    if(polis.LocationY == person.LocationY &&  polis.LocationX == person.LocationX)
+                    {
+                        Program.queue.Enqueue("Polisen hälsar på en medborgare");
                     }
                 }
             }
