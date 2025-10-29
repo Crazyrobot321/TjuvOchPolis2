@@ -12,6 +12,7 @@ namespace TjuvOchPolis
         public static int width = 100;
         public static bool hasRan = false;
         public static Queue queue = new Queue();
+        public static List<Thief> bustedthief = new List<Thief>();
         static void Main(string[] args)
         {
             //Skapar personernas tillhörigheter
@@ -51,13 +52,15 @@ namespace TjuvOchPolis
             {
                 City.RenderGameBoard(hasRan,100,25);
                 Personer.Move(personer, false);
-
+               
                 Console.SetCursorPosition(0, height + 3);
+                Prison.RenderPrison(hasRan, 20, 5);
+                Console.SetCursorPosition(0, height + 10);
                 Status(personer);
                 Console.WriteLine();
                 NewsFeed();
                 Console.WriteLine();
-                Prison.RenderPrison(hasRan, 20, 5);
+                
                 hasRan = true;
                 if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa loopen och sätter bool debug = true
                 {
@@ -119,16 +122,23 @@ namespace TjuvOchPolis
                     Console.Write("=");
             }
             Console.WriteLine();
-            if(queue.Count > 5)
-            {
-                queue.Clear();
-            }
-            else
+            if(queue.Count > 0 && queue.Count < 5)
             {
                 foreach (var item in queue)
                 {
-                    queue.Peek();
+                    Console.WriteLine(item.ToString().PadRight(40));
                 }
+            }
+            else
+            {
+                Console.WriteLine("Inga nya händelser ");
+            }
+            if(queue.Count > 2)
+            {
+                while (queue.Count > 2)
+                {
+                    queue.Dequeue();
+                } 
             }
 
         }
