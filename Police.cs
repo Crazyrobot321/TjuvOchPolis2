@@ -11,6 +11,11 @@
         public void Arrest(Thief thief)
         {
             var numberOfStolenProperties = thief.Properties.Count;
+
+            if(numberOfStolenProperties <= 0)
+            {
+                numberOfStolenProperties = 1;
+            }
             var numberOfSecondsInPrison = numberOfStolenProperties * 10;
             Properties.AddRange(thief.Properties);
             thief.Properties.Clear();
@@ -36,7 +41,6 @@
                             police.Arrest(thief);
 
                             Program.queue.Enqueue("Polisen haffar en skurk!");
-                            Program.bustedthief.Add(thief);
                         }
                         else
                         {

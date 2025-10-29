@@ -12,7 +12,6 @@ namespace TjuvOchPolis
         public static int width = 100;
         public static bool hasRan = false;
         public static Queue queue = new Queue();
-        public static List<Thief> bustedthief = new List<Thief>();
         static void Main(string[] args)
         {
             //Skapar personernas tillhörigheter
@@ -60,19 +59,20 @@ namespace TjuvOchPolis
                
 
                 MovementHelper.MovePersons(personer, false);
-                Console.SetCursorPosition(0, height + 9); //nedanför fängelset
-
-                Console.WriteLine(); // sätter new line för at slippa flytta cursor
+               // Console.SetCursorPosition(0, height + 9); //nedanför fängelset
+           
+               // Console.WriteLine(); // sätter new line för at slippa flytta cursor
 
                 // Status och newsfeed får inte renderas som dom gör då dom fyller på listan nedan, dom måste ersättas
 
-                //Status(personer);
-               // Console.WriteLine();  // sätter new line för at slippa flytta cursor
-               // NewsFeed();
+         
+                Status(personer);
+                // Console.WriteLine();  // sätter new line för at slippa flytta cursor
+                Console.SetCursorPosition(0, height + 9); //nedanför fängelset
 
-               
+                NewsFeed();
 
-                 hasRan = true;
+                hasRan = true;
                 if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa loopen och sätter bool debug = true
                 {
                     debug = true;
@@ -97,9 +97,38 @@ namespace TjuvOchPolis
 
         }
 
+        public static void ClearArea(int top, int left, int height, int width)
+        {
+            ConsoleColor colorBefore = Console.BackgroundColor;
+            try
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                string spaces = new string(' ', width);
+                for (int i = 0; i < height; i++)
+                {
+                    try
+                    {
+                        Console.SetCursorPosition(left, top + i);
+                        Console.Write(spaces);
+                    }
+                    catch (Exception)
+                    {
+
+                    
+                    }
+                   
+                }
+            }
+            finally
+            {
+                Console.BackgroundColor = colorBefore;
+            }
+        }
+
         public static void Status(List<Person> personer)
         {
-            for (int j = 0; j < width + 2; j++)
+            Console.SetCursorPosition(25, 27);
+            for (int j = 0; j <( width -23); j++)
             {
                 if (j == 5)
                 {
@@ -112,9 +141,15 @@ namespace TjuvOchPolis
             var Citizens = personer.OfType<Citizen>();
             var Thieves = personer.OfType<Thief>();
             var Coppers = personer.OfType<Police>();
-            Console.WriteLine($"\nDet finns {Citizens.Count<Citizen>()} medborgare");
-            Console.WriteLine($"\nDet finns {Thieves.Count<Thief>()} av {Thieves.Count<Thief>()} tjuvar");
-            Console.WriteLine($"\nDet finns {Coppers.Count<Police>()} poliser");
+
+            Console.SetCursorPosition(25, 28);
+            Console.Write($"Det finns {Citizens.Count<Citizen>()} medborgare     ");
+            Console.SetCursorPosition(25,29);
+            Console.Write($"Det finns {Thieves.Where(x => x.IsInPrison == false).Count()} tjuvar i staden   ");
+            Console.SetCursorPosition(25, 30);
+            Console.Write($"Det finns {Thieves.Where(x => x.IsInPrison == true).Count()} tjuvar i fängelset    ");
+            Console.SetCursorPosition(25, 31);
+            Console.Write($"Det finns {Coppers.Count<Police>()} poliser     ");
           
         }
         public static void NewsFeed()
@@ -130,9 +165,9 @@ namespace TjuvOchPolis
                     Console.Write("=");
             }
             Console.WriteLine();
-            if(queue.Count > 0 && queue.Count < 5)
+            if(queue.Count > 0)
             {
-                foreach (var item in queue)
+                foreach (var item in queue.ToArray().Take(5))
                 {
                     Console.WriteLine(item.ToString().PadRight(40));
                 }
