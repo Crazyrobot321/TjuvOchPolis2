@@ -43,10 +43,17 @@ namespace TjuvOchPolis
             {
                 personer.DirectionY = Random.Shared.Next(-1, 2);
             }
-
-            //Tar bort föregående symbol av respektive person
-            Console.SetCursorPosition(personer.LocationX, personer.LocationY);
-            Console.WriteLine(" ");
+            if(debug)
+            {
+                Console.Write("");
+            }
+            else
+            {
+                //Tar bort föregående symbol av respektive person
+                Console.SetCursorPosition(personer.LocationX, personer.LocationY);
+                Console.Write(" ");
+            }
+                
 
             personer.LocationX += personer.DirectionX;
             personer.LocationY += personer.DirectionY;
@@ -91,7 +98,8 @@ namespace TjuvOchPolis
                         break;
                     case Thief tjuv:
                         MovePerson(tjuv, symbol: 'T', color: ConsoleColor.Red, debug: debug, randomChance: 10);
-                        Thief.Steel(personer);
+                        // Call steal for the specific thief only
+                        Thief.Steel(tjuv, personer);
                         break;
                     case Police polis:
                         MovePerson(polis, symbol: 'P', color: ConsoleColor.Blue, debug: debug, randomChance: 10);
@@ -124,37 +132,34 @@ namespace TjuvOchPolis
             HasStolen = hasStolen;
             IsInPrison = isinprison;
         }
-        public static void Steel(List<Personer> personer)
-        {
-            var tjuvar = personer.OfType<Thief>(); //Filtrerar listan och tar bara med objekt som är av typen Thief
-            var medborgarna = personer.OfType<Citizen>();
 
-            foreach (var tjuv in tjuvar)
+        public static void Steel(Thief thief, List<Personer> personer)
+        {
+            if (thief.IsInPrison) //Kollar om tjuven är fängslad
+                return;
+
+            var medborgarna = personer.OfType<Citizen>(); //Filtrerar listan med typen Citizen
+
+            foreach (var medborgare in medborgarna)
             {
-                foreach(var medborgare in medborgarna)
+                if (thief.LocationY == medborgare.LocationY && thief.LocationX == medborgare.LocationX)
                 {
-                    if (tjuv.LocationY == medborgare.LocationY && tjuv.LocationX == medborgare.LocationX)
+                    if (medborgare.Properties == null || medborgare.Properties.Count == 0)
                     {
-                        int test = medborgare.Properties.Count;
-                        int rnd = Random.Shared.Next(test);
-                        if(medborgare.Properties.Count == 0)
-                        {
-                            break;
-                        }
-                        tjuv.Properties.Add(medborgare.Properties[rnd]);
-                        medborgare.Properties.RemoveAt(rnd);
-                        //foreach (var item in tjuv.Properties)
-                        //{
-                        //    Console.SetCursorPosition(0, Program.height + 2);
-                        //    Console.WriteLine($"\nEn tjuv stal {item}");
-                        //    Thread.Sleep(100);
-                        //    Console.Write(" ");
-                        //}
-                        tjuv.HasStolen = true;
+                        //Om medborgarens properties är 0 eller null bryts loopen tidigt
+                        break;
                     }
+
+                    int count = medborgare.Properties.Count;
+                    int rnd = Random.Shared.Next(0, count); // safe because count > 0
+                    thief.Properties.Add(medborgare.Properties[rnd]);
+                    medborgare.Properties.RemoveAt(rnd);
+                    thief.HasStolen = true;
+
+                    // Stop after stealing a single item from the first matching citizen
+                    break;
                 }
             }
-
         }
 
     }
@@ -166,8 +171,6 @@ namespace TjuvOchPolis
         {
             CaughtThieves = caughtThieves;
         }
-
-        List<Personer> prisonPopulation = new List<Personer>();
         
         public static void Busted(List<Personer> personer)
         {
