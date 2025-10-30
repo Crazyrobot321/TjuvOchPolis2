@@ -40,11 +40,11 @@
                         {
                             police.Arrest(thief);
 
-                            Program.queue.Enqueue("Polisen haffar en skurk!");
+                            Program.queue.Enqueue("The Police caught a thief! ");
                         }
                         else
                         {
-                            Program.queue.Enqueue("Polisen möter en tjuv!");
+                            Program.queue.Enqueue("The police meet a thief! ");
                         }
                     }
 
@@ -53,7 +53,7 @@
                 {
                     if (InSameLocation(police, citizen))
                     {
-                        Program.queue.Enqueue("Polisen hälsar på en medborgare");
+                        Program.queue.Enqueue("Police greet a citizen ");
                     }
                 }
             }

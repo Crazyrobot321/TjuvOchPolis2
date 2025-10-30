@@ -7,17 +7,18 @@ using System.Threading.Tasks;
 namespace TjuvOchPolis
 {
     internal class MovementHelper
-    {
+    {   //City
         public static int maxX = Program.width + 1;
         public static int maxY = Program.height;
         public static int minX = 2;
         public static int minY = 2;
-
+        //Prison
         public static int prisonMaxX = 20;
         public static int prisonMaxY = 32;
         public static int prisonMinX = 2;
         public static int prisonMinY = 28;
 
+        //Personernas Riktning och rörelse
         private static void MovePerson(Person person, char symbol, ConsoleColor color, bool debug, int randomChance)
         {
             int RndX = Random.Shared.Next(0, 100);
@@ -77,32 +78,32 @@ namespace TjuvOchPolis
 
         }
 
-        public static void MovePersons(List<Person> personer, bool debug)
+        public static void MovePersons(List<Person> people, bool debug)
         {
-            foreach (Person p in personer)
+            foreach (Person p in people)
             {
                 switch (p)
                 {
-                    case Citizen medborgare:
-                        MovePerson(medborgare, symbol: 'C', color: ConsoleColor.Green, debug: debug, randomChance: 10);
+                    case Citizen citizen:
+                        MovePerson(citizen, symbol: 'C', color: ConsoleColor.Green, debug: debug, randomChance: 10);
                         break;
-                    case Thief tjuv:
-                        if (tjuv.IsInPrison == true)
+                    case Thief thief:
+                        if (thief.IsInPrison == true)
                         {
-                            MoveInPrison(tjuv, debug: debug, randomChance: 10);
+                            MoveInPrison(thief, debug: debug, randomChance: 10);
                         }
                         else
                         {
-                            MovePerson(tjuv, symbol: 'T', color: ConsoleColor.Red, debug: debug, randomChance: 10);
+                            MovePerson(thief, symbol: 'T', color: ConsoleColor.Red, debug: debug, randomChance: 10);
                             // Call steal for the specific thief only
-                            Thief.Steel(tjuv, personer);
+                            Thief.Steel(thief, people);
 
                         }
                         break;
 
-                    case Police polis:
-                        MovePerson(polis, symbol: 'P', color: ConsoleColor.Blue, debug: debug, randomChance: 10);
-                        Police.PoliceMeetPersonCheck(personer);
+                    case Police police:
+                        MovePerson(police, symbol: 'P', color: ConsoleColor.Blue, debug: debug, randomChance: 10);
+                        Police.PoliceMeetPersonCheck(people);
                         break;
                     default:
                         break;

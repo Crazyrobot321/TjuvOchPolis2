@@ -8,34 +8,15 @@ namespace TjuvOchPolis
 {
     internal class Debugging
     {
-        public static void Debugs(List<Person> personer)
+        public static void Debugs(List<Person> people)
         {
-            for (int i = 0; i < personer.Count; i++)
+            for (int i = 0; i < people.Count; i++)
             {
-                Person p = personer[i];
-                Console.WriteLine($"{p.GetType().Name} befinner sig vid ({p.LocationX}) ({p.LocationY}) och går mot riktningen ({p.DirectionX})({p.DirectionY}) och har {string.Join(", ", p.Properties)}");
+                Person p = people[i];
+                Console.WriteLine($"{p.GetType().Name} is at ({p.LocationX}) ({p.LocationY}) and walkning towards direction ({p.DirectionX})({p.DirectionY}) and has {string.Join(", ", p.Properties)}");
             }
         }
 
-//        if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'p') //för att kolla status i fängelset.
-//                { 
-//                    hasRan = false;
-//                    prisonDebug = true;
-//                    debug = true;
 
-//                    while (prisonDebug)
-//                    {
-//                        Console.Clear();
-//                        Prison.RenderPrison(hasRan, 10, 10);
-//                        Console.SetCursorPosition(0, height + 2);
-
-//                        if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'p')
-//                        {
-//                            prisonDebug = false; //Fortsätter "main" loopen
-//                            debug = false;
-//                        }
-//}
-                    
-//                }
     }
 }

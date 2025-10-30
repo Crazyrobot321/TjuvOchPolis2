@@ -21,40 +21,41 @@ namespace TjuvOchPolis
 
         public void StartPrisonTime()
         {
+            //Timer för fängelset
             var timer = new System.Timers.Timer(TimeSpan.FromSeconds(NumberOfSecondsToSpendInPrison));
             timer.Elapsed += (object obj, ElapsedEventArgs e) =>
             {
                 IsInPrison = false;
-                Program.queue.Enqueue($"Fången har frisläppts efter {NumberOfSecondsToSpendInPrison}");
+                Program.queue.Enqueue($"The prisoner has been released after {NumberOfSecondsToSpendInPrison} seconds ");
                 timer.Stop();
             };
 
             timer.Start();
         }
 
-        public static void Steel(Thief thief, List<Person> personer)
+        public static void Steel(Thief thief, List<Person> people)
         {
             if (thief.IsInPrison) //Kollar om tjuven är fängslad
                 return;
 
-            var medborgarna = personer.OfType<Citizen>(); //Filtrerar listan med typen Citizen
+            var citizens = people.OfType<Citizen>(); //Filtrerar listan med typen Citizen
 
-            foreach (var medborgare in medborgarna)
+            foreach (var citizen in citizens)
             {
-                if (thief.LocationY == medborgare.LocationY && thief.LocationX == medborgare.LocationX)
+                if (thief.LocationY == citizen.LocationY && thief.LocationX == citizen.LocationX)
                 {
-                    if (medborgare.Properties == null || medborgare.Properties.Count == 0)
+                    if (citizen.Properties == null || citizen.Properties.Count == 0)
                     {
                         //Om medborgarens properties är 0 eller null bryts loopen tidigt
                         break;
                     }
 
-                    int count = medborgare.Properties.Count;
+                    int count = citizen.Properties.Count;
                     int rnd = Random.Shared.Next(0, count); // safe because count > 0
-                    thief.Properties.Add(medborgare.Properties[rnd]);
-                    medborgare.Properties.RemoveAt(rnd);
+                    thief.Properties.Add(citizen.Properties[rnd]);
+                    citizen.Properties.RemoveAt(rnd);
                     thief.HasStolen = true;
-                    Program.queue.Enqueue("En tjuv har stulit något!");
+                    Program.queue.Enqueue("A thief has stolen something! ");
                     // Stop after stealing a single item from the first matching citizen
                     break;
                 }

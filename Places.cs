@@ -62,14 +62,13 @@ namespace TjuvOchPolis
                     Console.WriteLine();
                 }
             }
-           // else
-               // Console.WriteLine();
+           
         }
         internal static void RenderPrison(bool hasRan, int width, int height)
         {
-            //spelytan för alla karaktärer ska vara 100x25, därav väggar runt staden
-            var gameHeight = height + 2; //102
-            var gameWidth = width + 2; // 27
+            //spelytan för alla karaktärer ska vara 20*5, därav väggar runt fängelset
+            var gameHeight = height + 2; //22
+            var gameWidth = width + 2; // 7
             if (!hasRan)
             {
                 for (int line = 0; line < gameHeight; line++)
@@ -108,8 +107,7 @@ namespace TjuvOchPolis
                     Console.WriteLine();
                 }
             }
-            //else
-           //     Console.WriteLine();
+           
         }
     }
 

@@ -50,24 +50,15 @@ namespace TjuvOchPolis
             //Medans debug boolen är falsk loopar programmet
             while (debug == false)
             {
-                //Console.Clear();
-
-                Console.SetCursorPosition(0, 0);
+               Console.SetCursorPosition(0, 0);
                 City.RenderGameBoard(hasRan,100,25);
 
                 Prison.RenderPrison(hasRan, 20, 5);
                
-
                 MovementHelper.MovePersons(personer, false);
-               // Console.SetCursorPosition(0, height + 9); //nedanför fängelset
-           
-               // Console.WriteLine(); // sätter new line för at slippa flytta cursor
-
-                // Status och newsfeed får inte renderas som dom gör då dom fyller på listan nedan, dom måste ersättas
-
-         
+                                       
                 Status(personer);
-                // Console.WriteLine();  // sätter new line för at slippa flytta cursor
+               
                 Console.SetCursorPosition(0, height + 9); //nedanför fängelset
 
                 NewsFeed();
@@ -81,7 +72,6 @@ namespace TjuvOchPolis
                     {
                         Console.Clear();
                         Debugging.Debugs(personer);
-                       // MovementHelper.MovePersons(personer, true);
                         Console.SetCursorPosition(0, height + 3);
                         if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa och sätter bool debug till false
                         {
@@ -96,7 +86,7 @@ namespace TjuvOchPolis
             }
 
         }
-
+        //Kolla upp - Delete everything below cursor exemple
         public static void ClearArea(int top, int left, int height, int width)
         {
             ConsoleColor colorBefore = Console.BackgroundColor;
@@ -143,13 +133,13 @@ namespace TjuvOchPolis
             var Coppers = personer.OfType<Police>();
 
             Console.SetCursorPosition(25, 28);
-            Console.Write($"Det finns {Citizens.Count<Citizen>()} medborgare     ");
+            Console.Write($"There is {Citizens.Count<Citizen>()} citizens     ");
             Console.SetCursorPosition(25,29);
-            Console.Write($"Det finns {Thieves.Where(x => x.IsInPrison == false).Count()} tjuvar i staden   ");
+            Console.Write($"There is {Thieves.Where(x => x.IsInPrison == false).Count()} thiefs in city   ");
             Console.SetCursorPosition(25, 30);
-            Console.Write($"Det finns {Thieves.Where(x => x.IsInPrison == true).Count()} tjuvar i fängelset    ");
+            Console.Write($"There is {Thieves.Where(x => x.IsInPrison == true).Count()} thiefs in prison    ");
             Console.SetCursorPosition(25, 31);
-            Console.Write($"Det finns {Coppers.Count<Police>()} poliser     ");
+            Console.Write($"There is {Coppers.Count<Police>()} polices     ");
           
         }
         public static void NewsFeed()
@@ -174,7 +164,7 @@ namespace TjuvOchPolis
             }
             else
             {
-                Console.WriteLine("Inga nya händelser ");
+                Console.WriteLine("No news ");
             }
             if(queue.Count > 2)
             {
