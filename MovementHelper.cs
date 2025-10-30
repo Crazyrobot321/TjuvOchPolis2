@@ -82,50 +82,34 @@ namespace TjuvOchPolis
         {
             foreach (Person p in people)
             {
-                switch (p)
+                if(p is Citizen citizen)
                 {
-                    case Citizen citizen:
-                        MovePerson(citizen, symbol: 'C', color: ConsoleColor.Green, debug: debug, randomChance: 10);
-                        break;
-                    case Thief thief:
-                        if (thief.IsInPrison == true)
-                        {
-                            MoveInPrison(thief, debug: debug, randomChance: 10);
-                        }
-                        else
-                        {
-                            MovePerson(thief, symbol: 'T', color: ConsoleColor.Red, debug: debug, randomChance: 10);
-                            // Call steal for the specific thief only
-                            Thief.Steel(thief, people);
+                    MovePerson(citizen, 'C', ConsoleColor.Green, debug, 10);
+                }
+                if(p is Thief thief)
+                {
+                    if (thief.IsInPrison == true)
+                    {
+                        MoveInPrison(thief, debug);
+                    }
+                    else
+                    {
+                        MovePerson(thief, 'T',ConsoleColor.Red, debug, 10);
+                        Thief.Steal(thief, people);
 
-                        }
-                        break;
-
-                    case Police police:
-                        MovePerson(police, symbol: 'P', color: ConsoleColor.Blue, debug: debug, randomChance: 10);
-                        Police.PoliceMeetPersonCheck(people);
-                        break;
-                    default:
-                        break;
+                    }
+                }
+                if(p is Police police)
+                {
+                    MovePerson(police, 'P', ConsoleColor.Blue, debug, 10);
+                    Police.PoliceMeetPersonCheck(people);
                 }
             }
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        private static void MoveInPrison(Thief thief, bool debug, int randomChance)
+        private static void MoveInPrison(Thief thief, bool debug)
         {
-            int RndX = Random.Shared.Next(prisonMinX-1, prisonMaxX+1);
-            int RndY = Random.Shared.Next(prisonMinY-1, prisonMaxY);
-
-            //Om slumpmässiga talet är under 10 finns chans att byta direktion
-            if (RndX <= randomChance)
-            {
-                thief.DirectionX = Random.Shared.Next(-1, 2);
-            }
-            if (RndY <= randomChance)
-            {
-                thief.DirectionY = Random.Shared.Next(-1, 2);
-            }
             if (debug)
             {
                 Console.Write("");
@@ -171,7 +155,7 @@ namespace TjuvOchPolis
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("T");
             }
         }

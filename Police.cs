@@ -21,14 +21,15 @@
             thief.Properties.Clear();
             thief.IsInPrison = true;
             thief.NumberOfSecondsToSpendInPrison = numberOfSecondsInPrison;
+            Program.queue.Enqueue("A thief has been sentenced to " + numberOfSecondsInPrison + " seconds in prison");
             thief.StartPrisonTime();
         }
 
         public static void PoliceMeetPersonCheck(List<Person> persons)
         {
-            var thiefs = persons.OfType<Thief>();
+            var thiefs = persons.OfType<Thief>(); //Filtrerar listan på typen Thief
             var polices = persons.OfType<Police>();
-            var citizens = persons.OfType<Citizen>();
+            var citizens = persons.OfType<Citizen>(); 
 
             foreach (var police in polices)
             {

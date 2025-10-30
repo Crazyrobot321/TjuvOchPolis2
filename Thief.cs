@@ -22,18 +22,19 @@ namespace TjuvOchPolis
         public void StartPrisonTime()
         {
             //Timer för fängelset
+            //Skapar en timer som räknar ner antalet sekunder fången ska sitta i fängelse
             var timer = new System.Timers.Timer(TimeSpan.FromSeconds(NumberOfSecondsToSpendInPrison));
-            timer.Elapsed += (object obj, ElapsedEventArgs e) =>
+            timer.Elapsed += (object obj, ElapsedEventArgs e) =>  //Registrerar en händelse som körs när timern har gått ut - släpper fången och stoppar timern
             {
                 IsInPrison = false;
                 Program.queue.Enqueue($"The prisoner has been released after {NumberOfSecondsToSpendInPrison} seconds ");
-                timer.Stop();
+                timer.Stop(); //Stoppar timern så den inte körs igen
             };
 
-            timer.Start();
+            timer.Start();//Startar timern, nedräkningen börjar nu
         }
 
-        public static void Steel(Thief thief, List<Person> people)
+        public static void Steal(Thief thief, List<Person> people)
         {
             if (thief.IsInPrison) //Kollar om tjuven är fängslad
                 return;
@@ -51,13 +52,12 @@ namespace TjuvOchPolis
                     }
 
                     int count = citizen.Properties.Count;
-                    int rnd = Random.Shared.Next(0, count); // safe because count > 0
+                    int rnd = Random.Shared.Next(0, count);
                     thief.Properties.Add(citizen.Properties[rnd]);
                     citizen.Properties.RemoveAt(rnd);
                     thief.HasStolen = true;
                     Program.queue.Enqueue("A thief has stolen something! ");
-                    // Stop after stealing a single item from the first matching citizen
-                    break;
+                    break; //Bryter koden så tjuven stjäl 1 sak
                 }
             }
         }

@@ -72,6 +72,7 @@ namespace TjuvOchPolis
                     {
                         Console.Clear();
                         Debugging.Debugs(personer);
+                        MovementHelper.MovePersons(personer, true);
                         Console.SetCursorPosition(0, height + 3);
                         if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa och sätter bool debug till false
                         {
@@ -86,37 +87,11 @@ namespace TjuvOchPolis
             }
 
         }
-        //Kolla upp - Delete everything below cursor exemple
-        public static void ClearArea(int top, int left, int height, int width)
-        {
-            ConsoleColor colorBefore = Console.BackgroundColor;
-            try
-            {
-                Console.BackgroundColor = ConsoleColor.Black;
-                string spaces = new string(' ', width);
-                for (int i = 0; i < height; i++)
-                {
-                    try
-                    {
-                        Console.SetCursorPosition(left, top + i);
-                        Console.Write(spaces);
-                    }
-                    catch (Exception)
-                    {
-
-                    
-                    }
-                   
-                }
-            }
-            finally
-            {
-                Console.BackgroundColor = colorBefore;
-            }
-        }
 
         public static void Status(List<Person> personer)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
             Console.SetCursorPosition(25, 27);
             for (int j = 0; j <( width -23); j++)
             {
@@ -131,19 +106,19 @@ namespace TjuvOchPolis
             var Citizens = personer.OfType<Citizen>();
             var Thieves = personer.OfType<Thief>();
             var Coppers = personer.OfType<Police>();
-
             Console.SetCursorPosition(25, 28);
             Console.Write($"There is {Citizens.Count<Citizen>()} citizens     ");
             Console.SetCursorPosition(25,29);
-            Console.Write($"There is {Thieves.Where(x => x.IsInPrison == false).Count()} thiefs in city   ");
+            Console.Write($"There is {Thieves.Where(x => x.IsInPrison == false).Count()} thiefs in city   "); //Skriver ut de tjuvarna som inte är i fängelse
             Console.SetCursorPosition(25, 30);
-            Console.Write($"There is {Thieves.Where(x => x.IsInPrison == true).Count()} thiefs in prison    ");
+            Console.Write($"There is {Thieves.Where(x => x.IsInPrison == true).Count()} thiefs in prison    "); //Skriver ut de tjuvarna som är i fängelse
             Console.SetCursorPosition(25, 31);
             Console.Write($"There is {Coppers.Count<Police>()} polices     ");
-          
+            Console.ForegroundColor = ConsoleColor.White;
         }
         public static void NewsFeed()
         {
+            Console.ForegroundColor = ConsoleColor.Cyan;
             for (int j = 0; j < width + 2; j++)
             {
                 if (j == 5)
@@ -157,9 +132,15 @@ namespace TjuvOchPolis
             Console.WriteLine();
             if(queue.Count > 0)
             {
-                foreach (var item in queue.ToArray().Take(5))
+                foreach (var item in queue.ToArray().Take(10))
                 {
-                    Console.WriteLine(item.ToString().PadRight(40));
+                    if(item != null)
+                    {
+                        Console.WriteLine(item.ToString().PadRight(60)); //Gör alla items samma längd, 60 karaktärer
+                    }
+                    else
+                        Console.WriteLine("");
+
                 }
             }
             else
@@ -173,7 +154,7 @@ namespace TjuvOchPolis
                     queue.Dequeue();
                 } 
             }
-
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

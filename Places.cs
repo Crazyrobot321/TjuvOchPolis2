@@ -26,6 +26,7 @@ namespace TjuvOchPolis
 
             if (!hasRan)
             {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
                 for (int line = 0; line < gameHeight; line++)
                 {
                     for (int row = 0; row < width + 2; row++)
@@ -62,10 +63,11 @@ namespace TjuvOchPolis
                     Console.WriteLine();
                 }
             }
-           
+           Console.ForegroundColor= ConsoleColor.White;
         }
         internal static void RenderPrison(bool hasRan, int width, int height)
         {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
             //spelytan för alla karaktärer ska vara 20*5, därav väggar runt fängelset
             var gameHeight = height + 2; //22
             var gameWidth = width + 2; // 7
@@ -107,7 +109,7 @@ namespace TjuvOchPolis
                     Console.WriteLine();
                 }
             }
-           
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 
