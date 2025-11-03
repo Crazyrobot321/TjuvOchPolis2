@@ -9,18 +9,25 @@
 
         public void Arrest(Thief thief)
         {
-            var numberOfStolenProperties = thief.Properties.Count;
+            // Kollar om tjuven redan är i fängelse
+            if (thief.IsInPrison)
+                return;
 
-            if(numberOfStolenProperties <= 0)
-            {
+            int numberOfStolenProperties = thief.Properties.Count;
+            if (numberOfStolenProperties <= 0)
                 numberOfStolenProperties = 1;
-            }
-            var numberOfSecondsInPrison = numberOfStolenProperties * 10;
+
+            int numberOfSecondsInPrison = numberOfStolenProperties * 10;
+
+            // Polisen beslagtar allt från tjuven
             Properties.AddRange(thief.Properties);
             thief.Properties.Clear();
+
+            // Skicka till fängelse och starta timer
             thief.IsInPrison = true;
             thief.NumberOfSecondsToSpendInPrison = numberOfSecondsInPrison;
-            Program.queue.Enqueue("A thief has been sentenced to " + numberOfSecondsInPrison + " seconds in prison");
+            Program.queue.Enqueue($"A thief has been sentenced to {numberOfSecondsInPrison} seconds in prison");
+
             thief.StartPrisonTime();
         }
 

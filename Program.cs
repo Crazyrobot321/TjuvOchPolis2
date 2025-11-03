@@ -31,6 +31,7 @@ namespace TjuvOchPolis
             while (debug == false)
             {
                 Console.SetCursorPosition(0, 0);
+
                 City.RenderGameBoard(hasRan, 100, 25);
 
                 Prison.RenderPrison(hasRan, 20, 5);
@@ -110,30 +111,23 @@ namespace TjuvOchPolis
                     Console.Write("=");
             }
             Console.WriteLine();
-            if(queue.Count > 0 && queue.Count <= 11)
+            if (queue.Count == 0)
             {
-                for(int i = 1; i < queue.Count; i++)
-                {
-                    var item = queue.ToArray()[i];
-                    if(item != null)
-                    {
-                        Console.WriteLine($"({i}) - {item.ToString().PadRight(60)}"); //Fyller ut alla items med 60 karaktärer åt höger
-                    }
-                    else
-                        Console.WriteLine("");
-                }
+                Console.WriteLine("No news");
             }
             else
             {
-                Console.WriteLine("No news ");
-            }
-            if(queue.Count > 10)
-            {
-                while (queue.Count > 10)
+                int index = 1;
+                foreach (var item in queue.ToArray().Take(10))
                 {
+                    Console.WriteLine($"({index++}) - {item.ToString().PadRight(60)}");
+                }
+
+                // Trim queue if it exceeds 10 items
+                while (queue.Count > 10)
                     queue.Dequeue();
-                } 
             }
+
             Console.ForegroundColor = ConsoleColor.White;
         }
 

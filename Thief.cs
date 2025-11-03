@@ -16,16 +16,20 @@ namespace TjuvOchPolis
 
         public void StartPrisonTime()
         {
-            //Timer för fängelset
-            //Skapar en timer som räknar ner antalet sekunder fången ska sitta i fängelse
-            var timer = new System.Timers.Timer(TimeSpan.FromSeconds(NumberOfSecondsToSpendInPrison));
-            timer.Elapsed += (object obj, ElapsedEventArgs e) =>  //Registrerar en händelse som körs när timern har gått ut som släpper fången och stoppar timern
+            // Skapar en timer som bara körs en gång efter specificerad tid
+            var timer = new System.Timers.Timer(TimeSpan.FromSeconds(NumberOfSecondsToSpendInPrison))
+            {
+                AutoReset = false // Viktigt! Annars körs Elapsed flera gånger
+            };
+
+            timer.Elapsed += (sender, e) =>
             {
                 IsInPrison = false;
-                Program.queue.Enqueue($"The prisoner has been released after {NumberOfSecondsToSpendInPrison} seconds ");
-                timer.Stop(); //Stoppar timern
+                Program.queue.Enqueue($"The prisoner has been released after {NumberOfSecondsToSpendInPrison} seconds");
+                timer.Dispose(); // Rensar upp resurser
             };
-            timer.Start();//Startar timern
+
+            timer.Start();
         }
 
         public static void Steal(Thief thief, List<Person> people)
