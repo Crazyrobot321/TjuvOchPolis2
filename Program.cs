@@ -22,7 +22,7 @@ namespace TjuvOchPolis
             bool debug = false;
 
             //Skapar personer med slumpmässig placering inom spelplanen och slumpmässig riktning
-            for(int i = 0; i < 20; i++)
+            for(int i = 0; i < 20; i++)//Medborgare
             {
                 int posX = Random.Shared.Next(3, width - 2);
                 int posY = Random.Shared.Next(3, height - 2);
@@ -30,7 +30,7 @@ namespace TjuvOchPolis
                 int dirY = Random.Shared.Next(-1, 2);
                 personer.Add(new Citizen(posX, posY, dirX, dirY, properties));
             }
-            for(int i = 0; i < 10; i++)
+            for(int i = 0; i < 10; i++)//Tjuvar
             {
                 int posX = Random.Shared.Next(3, width - 2);
                 int posY = Random.Shared.Next(3, height - 2);
@@ -38,7 +38,7 @@ namespace TjuvOchPolis
                 int dirY = Random.Shared.Next(-1, 2);
                 personer.Add(new Thief(posX, posY, dirX, dirY, StolenItems, false, false));
             }
-            for(int i = 0; i < 4; i++)
+            for(int i = 0; i < 4; i++)//Poliser
             {
                 int posX = Random.Shared.Next(3, width - 2);
                 int posY = Random.Shared.Next(3, height - 2);
