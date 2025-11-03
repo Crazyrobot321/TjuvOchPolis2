@@ -2,10 +2,9 @@
 {
     class Police : Person
     {
-        public int CaughtThieves { get; set; }
-        public Police(int locationX, int locationY, int directionX, int directionY, List<String> properties, int caughtThieves) : base(locationX, locationY, directionX, directionY, properties)
+        public Police(int locationX, int locationY, int directionX, int directionY, List<String> properties) : base(locationX, locationY, directionX, directionY, properties)
         {
-            CaughtThieves = caughtThieves;
+
         }
 
         public void Arrest(Thief thief)
@@ -27,9 +26,9 @@
 
         public static void PoliceMeetPersonCheck(List<Person> persons)
         {
-            var thiefs = persons.OfType<Thief>(); //Filtrerar listan på typen Thief
-            var polices = persons.OfType<Police>();
-            var citizens = persons.OfType<Citizen>(); 
+            List<Thief> thiefs = persons.OfType<Thief>().ToList(); //Skapar en lista med alla personer som är typen Thief
+            List<Police> polices = persons.OfType<Police>().ToList();
+            List<Citizen> citizens = persons.OfType<Citizen>().ToList(); 
 
             foreach (var police in polices)
             {
@@ -40,12 +39,12 @@
                         if (thief.HasStolen)
                         {
                             police.Arrest(thief);
-
-                            Program.queue.Enqueue("The Police caught a thief! ");
+                            Program.queue.Enqueue("A Cop caught a thief! ");
+                            break;
                         }
                         else
                         {
-                            Program.queue.Enqueue("The police meet a thief! ");
+                            Program.queue.Enqueue("A Cop met a thief! ");
                         }
                     }
 
@@ -54,7 +53,7 @@
                 {
                     if (InSameLocation(police, citizen))
                     {
-                        Program.queue.Enqueue("Police greet a citizen ");
+                        Program.queue.Enqueue("A Cop greet a citizen ");
                     }
                 }
             }

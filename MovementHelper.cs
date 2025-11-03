@@ -19,6 +19,36 @@ namespace TjuvOchPolis
         public static int prisonMinY = 28;
 
         //Personernas Riktning och rörelse
+
+        public static void MovePersons(List<Person> people, bool debug)
+        {
+            foreach (Person p in people)
+            {
+                if(p is Citizen citizen)
+                {
+                    MovePerson(citizen, 'C', ConsoleColor.Green, debug, 10);
+                }
+                if(p is Thief thief)
+                {
+                    if (thief.IsInPrison == true)
+                    {
+                        MoveInPrison(thief, debug);
+                    }
+                    else
+                    {
+                        MovePerson(thief, 'T',ConsoleColor.Red, debug, 10);
+                        Thief.Steal(thief, people);
+
+                    }
+                }
+                if(p is Police police)
+                {
+                    MovePerson(police, 'P', ConsoleColor.Blue, debug, 10);
+                    Police.PoliceMeetPersonCheck(people);
+                }
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+        }
         private static void MovePerson(Person person, char symbol, ConsoleColor color, bool debug, int randomChance)
         {
             int RndX = Random.Shared.Next(0, 100);
@@ -77,37 +107,6 @@ namespace TjuvOchPolis
 
 
         }
-
-        public static void MovePersons(List<Person> people, bool debug)
-        {
-            foreach (Person p in people)
-            {
-                if(p is Citizen citizen)
-                {
-                    MovePerson(citizen, 'C', ConsoleColor.Green, debug, 10);
-                }
-                if(p is Thief thief)
-                {
-                    if (thief.IsInPrison == true)
-                    {
-                        MoveInPrison(thief, debug);
-                    }
-                    else
-                    {
-                        MovePerson(thief, 'T',ConsoleColor.Red, debug, 10);
-                        Thief.Steal(thief, people);
-
-                    }
-                }
-                if(p is Police police)
-                {
-                    MovePerson(police, 'P', ConsoleColor.Blue, debug, 10);
-                    Police.PoliceMeetPersonCheck(people);
-                }
-            }
-            Console.ForegroundColor = ConsoleColor.White;
-        }
-
         private static void MoveInPrison(Thief thief, bool debug)
         {
             if (debug)
