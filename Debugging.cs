@@ -13,7 +13,7 @@ namespace TjuvOchPolis
             for (int i = 0; i < people.Count; i++)
             {
                 Person p = people[i];
-                Console.WriteLine($"{p.GetType().Name} is at ({p.LocationX}) ({p.LocationY}) and walkning towards direction ({p.DirectionX})({p.DirectionY}) and has {string.Join(", ", p.Properties)}");
+                Console.WriteLine($"{p.GetType().Name} is at ({p.LocationX}) ({p.LocationY}) and walking towards direction ({p.DirectionX})({p.DirectionY}) and has {string.Join(", ", p.Properties)}");
             }
         }
 

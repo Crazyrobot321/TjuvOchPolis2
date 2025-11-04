@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace TjuvOchPolis
@@ -22,7 +23,7 @@ namespace TjuvOchPolis
             bool debug = false;
 
             //Skapar personer med slumpmässig placering inom spelplanen och slumpmässig riktning
-            for(int i = 0; i < 20; i++)//Medborgare
+            for(int i = 0; i < 20; i++)
             {
                 int posX = Random.Shared.Next(3, width - 2);
                 int posY = Random.Shared.Next(3, height - 2);
@@ -30,7 +31,7 @@ namespace TjuvOchPolis
                 int dirY = Random.Shared.Next(-1, 2);
                 personer.Add(new Citizen(posX, posY, dirX, dirY, properties));
             }
-            for(int i = 0; i < 10; i++)//Tjuvar
+            for(int i = 0; i < 10; i++)
             {
                 int posX = Random.Shared.Next(3, width - 2);
                 int posY = Random.Shared.Next(3, height - 2);
@@ -38,27 +39,28 @@ namespace TjuvOchPolis
                 int dirY = Random.Shared.Next(-1, 2);
                 personer.Add(new Thief(posX, posY, dirX, dirY, StolenItems, false, false));
             }
-            for(int i = 0; i < 4; i++)//Poliser
+            for(int i = 0; i < 4; i++)
             {
                 int posX = Random.Shared.Next(3, width - 2);
                 int posY = Random.Shared.Next(3, height - 2);
                 int dirX = Random.Shared.Next(-1, 2);
                 int dirY = Random.Shared.Next(-1, 2);
-                personer.Add(new Police(posX, posY, dirX, dirY, seizedGoods, 0));
+                personer.Add(new Police(posX, posY, dirX, dirY, seizedGoods));
             }
             Console.ReadLine();
-            //Medans debug boolen är falsk loopar programmet
+            //Medans debug boolen är falsk körs programmet
             while (debug == false)
             {
-               Console.SetCursorPosition(0, 0);
-                City.RenderGameBoard(hasRan,100,25);
+                Console.SetCursorPosition(0, 0);
+
+                City.RenderGameBoard(hasRan, 100, 25);
 
                 Prison.RenderPrison(hasRan, 20, 5);
-               
+
                 MovementHelper.MovePersons(personer, false);
-                                       
+
                 Status(personer);
-               
+
                 Console.SetCursorPosition(0, height + 9); //nedanför fängelset
 
                 NewsFeed();
@@ -107,13 +109,13 @@ namespace TjuvOchPolis
             var Thieves = personer.OfType<Thief>();
             var Coppers = personer.OfType<Police>();
             Console.SetCursorPosition(25, 28);
-            Console.Write($"There is {Citizens.Count<Citizen>()} citizens     ");
+            Console.Write($"There are {Citizens.Count()} citizens     ");
             Console.SetCursorPosition(25,29);
-            Console.Write($"There is {Thieves.Where(x => x.IsInPrison == false).Count()} thiefs in city   "); //Skriver ut de tjuvarna som inte är i fängelse
+            Console.Write($"There are {Thieves.Where(x => x.IsInPrison == false).Count()} thiefs in city   "); //Skriver ut de tjuvarna som inte är i fängelse
             Console.SetCursorPosition(25, 30);
-            Console.Write($"There is {Thieves.Where(x => x.IsInPrison == true).Count()} thiefs in prison    "); //Skriver ut de tjuvarna som är i fängelse
+            Console.Write($"There are {Thieves.Where(x => x.IsInPrison == true).Count()} thiefs in prison    "); //Skriver ut de tjuvarna som är i fängelse
             Console.SetCursorPosition(25, 31);
-            Console.Write($"There is {Coppers.Count<Police>()} polices     ");
+            Console.Write($"There are {Coppers.Count()} polices     ");
             Console.ForegroundColor = ConsoleColor.White;
         }
         public static void NewsFeed()
@@ -130,31 +132,26 @@ namespace TjuvOchPolis
                     Console.Write("=");
             }
             Console.WriteLine();
-            if(queue.Count > 0)
+            if (queue.Count == 0)
             {
-                foreach (var item in queue.ToArray().Take(10))
-                {
-                    if(item != null)
-                    {
-                        Console.WriteLine(item.ToString().PadRight(60)); //Gör alla items samma längd, 60 karaktärer
-                    }
-                    else
-                        Console.WriteLine("");
-
-                }
+                Console.WriteLine("No news");
             }
             else
             {
-                Console.WriteLine("No news ");
-            }
-            if(queue.Count > 2)
-            {
-                while (queue.Count > 2)
+                int index = 1;
+                foreach (var item in queue.ToArray().Take(10))
                 {
+                    Console.WriteLine($"({index++}) - {item.ToString().PadRight(60)}");
+                }
+
+                // Trim queue if it exceeds 10 items
+                while (queue.Count > 10)
                     queue.Dequeue();
-                } 
             }
+
             Console.ForegroundColor = ConsoleColor.White;
         }
+
     }
+
 }
