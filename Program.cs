@@ -23,9 +23,30 @@ namespace TjuvOchPolis
             bool debug = false;
 
             //Skapar personer med slumpmässig placering inom spelplanen och slumpmässig riktning
-            AddPeople(20, personer, (x, y, dx, dy) => new Citizen(x, y, dx, dy, properties));
-            AddPeople(10, personer, (x, y, dx, dy) => new Thief(x, y, dx, dy, StolenItems, false, false));
-            AddPeople(4, personer, (x, y, dx, dy) => new Police(x, y, dx, dy, seizedGoods));
+            for (int i = 0; i < 20; i++)
+            {
+                int posX = Random.Shared.Next(3, width - 2);
+                int posY = Random.Shared.Next(3, height - 2);
+                int dirX = Random.Shared.Next(-1, 2);
+                int dirY = Random.Shared.Next(-1, 2);
+                personer.Add(new Citizen(posX, posY, dirX, dirY, properties));
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                int posX = Random.Shared.Next(3, width - 2);
+                int posY = Random.Shared.Next(3, height - 2);
+                int dirX = Random.Shared.Next(-1, 2);
+                int dirY = Random.Shared.Next(-1, 2);
+                personer.Add(new Thief(posX, posY, dirX, dirY, StolenItems, false, false));
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                int posX = Random.Shared.Next(3, width - 2);
+                int posY = Random.Shared.Next(3, height - 2);
+                int dirX = Random.Shared.Next(-1, 2);
+                int dirY = Random.Shared.Next(-1, 2);
+                personer.Add(new Police(posX, posY, dirX, dirY, seizedGoods));
+            }
             Console.ReadLine();
             //Medans debug boolen är falsk körs programmet
             while (debug == false)
@@ -129,19 +150,6 @@ namespace TjuvOchPolis
             }
 
             Console.ForegroundColor = ConsoleColor.White;
-        }
-
-        // Generisk metod som lägger till personer av valfri typ (Citizen, Thief, Police)
-        static void AddPeople<T>(int count, List<Person> personer, Func<int, int, int, int, T> FinishedPerson) where T : Person 
-        {
-            for (int i = 0; i < count; i++)
-            {
-                int posX = Random.Shared.Next(3, width - 2);
-                int posY = Random.Shared.Next(3, height - 2);
-                int dirX = Random.Shared.Next(-1, 2);
-                int dirY = Random.Shared.Next(-1, 2);
-                personer.Add(FinishedPerson(posX, posY, dirX, dirY));
-            }
         }
 
     }
