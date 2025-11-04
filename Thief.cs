@@ -22,7 +22,7 @@ namespace TjuvOchPolis
                 AutoReset = false // Viktigt! Annars körs Elapsed flera gånger
             };
 
-            timer.Elapsed += (sender, e) =>
+            timer.Elapsed += (sender, e) => //sender = timer, e = händelse (när timern startade)
             {
                 IsInPrison = false;
                 Program.queue.Enqueue($"The prisoner has been released after {NumberOfSecondsToSpendInPrison} seconds");
@@ -41,7 +41,7 @@ namespace TjuvOchPolis
 
             foreach (var citizen in citizens)
             {
-                if (thief.LocationY == citizen.LocationY && thief.LocationX == citizen.LocationX)
+                if (Person.InSameLocation(thief, citizen))
                 {
                     if (citizen.Properties == null || citizen.Properties.Count == 0)
                     {

@@ -11,7 +11,7 @@ namespace TjuvOchPolis
         //CITY
         public static int height = 25;
         public static int width = 100;
-        public static bool hasRan = false;
+        public static bool hasRun = false;
         public static Queue queue = new Queue();
         static void Main(string[] args)
         {
@@ -30,7 +30,7 @@ namespace TjuvOchPolis
                 int dirX = Random.Shared.Next(-1, 2);
                 int dirY = Random.Shared.Next(-1, 2);
                 personer.Add(new Citizen(posX, posY, dirX, dirY, properties));
-            }
+            } //Medborgare
             for(int i = 0; i < 10; i++)
             {
                 int posX = Random.Shared.Next(3, width - 2);
@@ -38,7 +38,7 @@ namespace TjuvOchPolis
                 int dirX = Random.Shared.Next(-1, 2);
                 int dirY = Random.Shared.Next(-1, 2);
                 personer.Add(new Thief(posX, posY, dirX, dirY, StolenItems, false, false));
-            }
+            } //Tjuvar
             for(int i = 0; i < 4; i++)
             {
                 int posX = Random.Shared.Next(3, width - 2);
@@ -46,16 +46,16 @@ namespace TjuvOchPolis
                 int dirX = Random.Shared.Next(-1, 2);
                 int dirY = Random.Shared.Next(-1, 2);
                 personer.Add(new Police(posX, posY, dirX, dirY, seizedGoods));
-            }
+            } //Poliser
             Console.ReadLine();
             //Medans debug boolen är falsk körs programmet
             while (debug == false)
             {
                 Console.SetCursorPosition(0, 0);
 
-                City.RenderGameBoard(hasRan, 100, 25);
+                City.RenderGameBoard(hasRun, 100, 25);
 
-                Prison.RenderPrison(hasRan, 20, 5);
+                Prison.RenderPrison(hasRun, 20, 5);
 
                 MovementHelper.MovePersons(personer, false);
 
@@ -65,7 +65,7 @@ namespace TjuvOchPolis
 
                 NewsFeed();
 
-                hasRan = true;
+                hasRun = true;
                 if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa loopen och sätter bool debug = true
                 {
                     debug = true;
@@ -79,7 +79,7 @@ namespace TjuvOchPolis
                         if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa och sätter bool debug till false
                         {
                             debug = false; //Fortsätter "main" loopen
-                            hasRan = false;
+                            hasRun = false;
                             Console.Clear();
                         }
                         Thread.Sleep(100);
@@ -139,12 +139,12 @@ namespace TjuvOchPolis
             else
             {
                 int index = 1;
-                foreach (var item in queue.ToArray().Take(10))
+                foreach (var item in queue.ToArray().Take(10)) //Gör om queue till en Array och plockar 10 object
                 {
-                    Console.WriteLine($"({index++}) - {item.ToString().PadRight(60)}");
+                    Console.WriteLine($"({index++}) - {item.ToString().PadRight(60)}"); //Gör om item till string och fyller 60 karaktärer åt höger
                 }
 
-                // Trim queue if it exceeds 10 items
+                // Börja ta bort queue innehåll när det finns mer än 10 händelser
                 while (queue.Count > 10)
                     queue.Dequeue();
             }

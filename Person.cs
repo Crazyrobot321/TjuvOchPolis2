@@ -27,5 +27,10 @@ namespace TjuvOchPolis
             Properties = new List<string>(properties); //Skapar en ny lista med samma innehåll så att varje person får sin egen kopia av listan (inte delar samma referens)
         }
 
+        public static bool InSameLocation(Person Person1, Person Person2)
+        {
+            return Person1.LocationY == Person2.LocationY &&
+                   Person1.LocationX == Person2.LocationX;
+        }
     }
 }
