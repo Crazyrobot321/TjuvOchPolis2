@@ -51,6 +51,7 @@ namespace TjuvOchPolis
                     thief.Properties.Add(citizen.Properties[rnd]);
                     citizen.Properties.RemoveAt(rnd);
                     thief.HasStolen = true;
+                    citizen.Robbed = true;
                     Program.queue.Enqueue("A thief has stolen something! ");
                     break; //Bryter koden så tjuven stjäl en sak
                 }

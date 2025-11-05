@@ -29,7 +29,7 @@ namespace TjuvOchPolis
                 int posY = Random.Shared.Next(3, height - 2);
                 int dirX = Random.Shared.Next(-1, 2);
                 int dirY = Random.Shared.Next(-1, 2);
-                personer.Add(new Citizen(posX, posY, dirX, dirY, properties));
+                personer.Add(new Citizen(posX, posY, dirX, dirY, properties, false));
             } //Medborgare
             for(int i = 0; i < 10; i++)
             {
@@ -75,7 +75,6 @@ namespace TjuvOchPolis
                         Console.Clear();
                         Debugging.Debugs(personer);
                         MovementHelper.MovePersons(personer, true);
-                        Console.SetCursorPosition(0, height + 3);
                         if (Console.KeyAvailable && Console.ReadKey(true).KeyChar == 'd') //Kollar om d är tryckt utan att pausa och sätter bool debug till false
                         {
                             debug = false; //Fortsätter "main" loopen
@@ -111,10 +110,12 @@ namespace TjuvOchPolis
             Console.SetCursorPosition(25, 28);
             Console.Write($"There are {Citizens.Count()} citizens     ");
             Console.SetCursorPosition(25,29);
+            Console.Write($"There are {Citizens.Where(x => x.Robbed == true).Count()} robbed citizens");
+            Console.SetCursorPosition(25,30);
             Console.Write($"There are {Thieves.Where(x => x.IsInPrison == false).Count()} thiefs in city   "); //Skriver ut de tjuvarna som inte är i fängelse
-            Console.SetCursorPosition(25, 30);
-            Console.Write($"There are {Thieves.Where(x => x.IsInPrison == true).Count()} thiefs in prison    "); //Skriver ut de tjuvarna som är i fängelse
             Console.SetCursorPosition(25, 31);
+            Console.Write($"There are {Thieves.Where(x => x.IsInPrison == true).Count()} thiefs in prison    "); //Skriver ut de tjuvarna som är i fängelse
+            Console.SetCursorPosition(25, 32);
             Console.Write($"There are {Coppers.Count()} polices     ");
             Console.ForegroundColor = ConsoleColor.White;
         }
