@@ -17,12 +17,9 @@ namespace TjuvOchPolis
         public void StartPrisonTime()
         {
             // Skapar en timer som bara körs en gång efter specificerad tid
-            var timer = new System.Timers.Timer(TimeSpan.FromSeconds(NumberOfSecondsToSpendInPrison))
-            {
-                AutoReset = false // Viktigt! Annars körs Elapsed flera gånger
-            };
+            var timer = new System.Timers.Timer(TimeSpan.FromSeconds(NumberOfSecondsToSpendInPrison));
 
-            timer.Elapsed += (sender, e) => //sender = timer, e = händelse (när timern startade)
+            timer.Elapsed += (sender, e) => //sender = timer, e = information om när händelsen inträffade (när timern startade)
             {
                 IsInPrison = false;
                 Program.queue.Enqueue($"The prisoner has been released after {NumberOfSecondsToSpendInPrison} seconds");

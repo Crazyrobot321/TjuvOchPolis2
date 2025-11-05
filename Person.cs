@@ -15,8 +15,6 @@ namespace TjuvOchPolis
         public int DirectionX { get; set; }
         public int DirectionY { get; set; }
         public List<String> Properties{ get; set; }
-        
-   
 
         public Person(int locationX, int locationY, int directionX, int directionY, List<String>properties)
         {

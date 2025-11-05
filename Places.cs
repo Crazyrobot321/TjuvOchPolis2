@@ -18,6 +18,15 @@ namespace TjuvOchPolis
             Height = height;
         }
 
+        
+    }
+
+    internal class City : Places
+    {
+        public City(bool hasRun, int width, int height): base(hasRun, width, height)
+        {
+            
+        }
         internal static void RenderGameBoard(bool hasRun, int width, int height)
         {
             //spelytan för alla karaktärer ska vara 100x25, därav väggar runt staden
@@ -63,7 +72,15 @@ namespace TjuvOchPolis
                     Console.WriteLine();
                 }
             }
-           Console.ForegroundColor= ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+    }
+
+    internal class Prison : Places
+    {
+        public Prison(bool hasRun, int width, int height): base(hasRun, width, height)
+        {
+            
         }
         internal static void RenderPrison(bool hasRun, int width, int height)
         {
@@ -111,21 +128,6 @@ namespace TjuvOchPolis
             }
             Console.ForegroundColor = ConsoleColor.White;
         }
-    }
 
-    internal class City : Places
-    {
-        public City(bool hasRun, int width, int height): base(hasRun, width, height)
-        {
-            
-        }
-    }
-
-    internal class Prison : Places
-    {
-        public Prison(bool hasRun, int width, int height): base(hasRun, width, height)
-        {
-            
-        }
     }
 }

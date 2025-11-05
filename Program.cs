@@ -49,7 +49,7 @@ namespace TjuvOchPolis
             } //Poliser
             Console.ReadLine();
             //Medans debug boolen är falsk körs programmet
-            while (debug == false)
+            while (!debug)
             {
                 Console.SetCursorPosition(0, 0);
 
