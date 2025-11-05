@@ -58,8 +58,6 @@ namespace TjuvOchPolis
                                 Console.Write("=");
                             }
                         }
-
-
                         else if (isFirstRow || isLastRow)
                         {
                             Console.Write("||");

@@ -47,6 +47,7 @@ namespace TjuvOchPolis
                 int dirY = Random.Shared.Next(-1, 2);
                 personer.Add(new Police(posX, posY, dirX, dirY, seizedGoods));
             } //Poliser
+            Console.WriteLine("Press enter to start program...");
             Console.ReadLine();
             //Medans debug boolen är falsk körs programmet
             while (!debug)
