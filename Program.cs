@@ -13,6 +13,7 @@ namespace TjuvOchPolis
         public static int width = 100;
         public static bool hasRun = false;
         public static Queue queue = new Queue();
+
         static void Main(string[] args)
         {
             //Skapar personernas tillhörigheter
@@ -111,7 +112,7 @@ namespace TjuvOchPolis
             Console.SetCursorPosition(25, 28);
             Console.Write($"There are {Citizens.Count()} citizens     ");
             Console.SetCursorPosition(25,29);
-            Console.Write($"There are {Citizens.Where(x => x.Robbed == true).Count()} robbed citizens");
+            Console.Write($"There are {Citizens.Where(x => x.Robbed == true).Count()} robbed citizens"); //Skriver ut de medborgare som har blivit rånad
             Console.SetCursorPosition(25,30);
             Console.Write($"There are {Thieves.Where(x => x.IsInPrison == false).Count()} thiefs in city   "); //Skriver ut de tjuvarna som inte är i fängelse
             Console.SetCursorPosition(25, 31);
@@ -143,7 +144,7 @@ namespace TjuvOchPolis
                 int index = 1;
                 foreach (var item in queue.ToArray().Take(10)) //Gör om queue till en Array och plockar 10 object
                 {
-                    Console.WriteLine($"({index++}) - {item.ToString().PadRight(60)}"); //Gör om item till string och fyller 60 karaktärer åt höger
+                    Console.WriteLine($"({index++}) - {item.ToString().PadRight(60)}"); //Gör om item till string och fyller ut till 60 tecken för jämn bredd
                 }
 
                 // Börja ta bort queue innehåll när det finns mer än 10 händelser

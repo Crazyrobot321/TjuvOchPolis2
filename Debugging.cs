@@ -14,6 +14,10 @@ namespace TjuvOchPolis
             {
                 Person p = people[i];
                 Console.WriteLine($"{p.GetType().Name} is at ({p.LocationX}) ({p.LocationY}) and walking towards direction ({p.DirectionX})({p.DirectionY}) and has {string.Join(", ", p.Properties)}");
+                if(p is Thief thief)
+                {
+                    Console.WriteLine($"Has this thief stolen anything: {thief.HasStolen}");
+                }
             }
         }
 
