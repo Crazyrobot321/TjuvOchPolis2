@@ -16,6 +16,7 @@ namespace TjuvOchPolis
 
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
             //Skapar personernas tillhörigheter
             List<String> properties = new List<String> {"Keys", "Mobile", "Wallet", "Watch", "Jewlery"};
             List<String> seizedGoods = new List<String>();
