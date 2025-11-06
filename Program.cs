@@ -9,13 +9,14 @@ namespace TjuvOchPolis
     internal class Program
     {
         //CITY
-        public static int height = 25;
+        public static int height = 15;
         public static int width = 100;
         public static bool hasRun = false;
         public static Queue queue = new Queue();
 
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
             //Skapar personernas tillhörigheter
             List<String> properties = new List<String> {"Keys", "Mobile", "Wallet", "Watch", "Jewlery"};
             List<String> seizedGoods = new List<String>();
@@ -56,7 +57,7 @@ namespace TjuvOchPolis
             {
                 Console.SetCursorPosition(0, 0);
 
-                City.RenderGameBoard(hasRun, 100, 25);
+                City.RenderGameBoard(hasRun, width, height);
 
                 Prison.RenderPrison(hasRun, 20, 5);
 
@@ -96,7 +97,7 @@ namespace TjuvOchPolis
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.SetCursorPosition(25, 27);
+            Console.SetCursorPosition(25, 17);
             for (int j = 0; j <( width -23); j++)
             {
                 if (j == 5)
@@ -110,15 +111,15 @@ namespace TjuvOchPolis
             var Citizens = personer.OfType<Citizen>();
             var Thieves = personer.OfType<Thief>();
             var Coppers = personer.OfType<Police>();
-            Console.SetCursorPosition(25, 28);
+            Console.SetCursorPosition(25, 18);
             Console.Write($"There are {Citizens.Count()} citizens     ");
-            Console.SetCursorPosition(25,29);
+            Console.SetCursorPosition(25,19);
             Console.Write($"There are {Citizens.Where(x => x.Robbed == true).Count()} robbed citizens"); //Skriver ut de medborgare som har blivit rånad
-            Console.SetCursorPosition(25,30);
+            Console.SetCursorPosition(25,20);
             Console.Write($"There are {Thieves.Where(x => x.IsInPrison == false).Count()} thiefs in city   "); //Skriver ut de tjuvarna som inte är i fängelse
-            Console.SetCursorPosition(25, 31);
+            Console.SetCursorPosition(25, 21);
             Console.Write($"There are {Thieves.Where(x => x.IsInPrison == true).Count()} thiefs in prison    "); //Skriver ut de tjuvarna som är i fängelse
-            Console.SetCursorPosition(25, 32);
+            Console.SetCursorPosition(25, 22);
             Console.Write($"There are {Coppers.Count()} polices     ");
             Console.ForegroundColor = ConsoleColor.White;
         }
@@ -143,13 +144,13 @@ namespace TjuvOchPolis
             else
             {
                 int index = 1;
-                foreach (var item in queue.ToArray().Take(10)) //Gör om queue till en Array och plockar 10 object
+                foreach (var item in queue.ToArray().Take(4)) //Gör om queue till en Array och plockar 10 object
                 {
                     Console.WriteLine($"({index++}) - {item.ToString().PadRight(60)}"); //Gör om item till string och fyller ut till 60 tecken för jämn bredd
                 }
 
                 // Börja ta bort queue innehåll när det finns mer än 10 händelser
-                while (queue.Count > 10)
+                while (queue.Count > 4)
                     queue.Dequeue();
             }
 
