@@ -14,6 +14,7 @@
                 return;
 
             int numberOfStolenProperties = thief.Properties.Count;
+            //Ska finnas minst 1 stulen properties
             if (numberOfStolenProperties <= 0)
                 numberOfStolenProperties = 1;
 
@@ -41,7 +42,7 @@
             {
                 foreach (var thief in thiefs)
                 {
-                    if (InSameLocation(police, thief))
+                    if (Person.InSameLocation(police, thief))
                     {
                         if (thief.HasStolen)
                         {
@@ -58,7 +59,7 @@
                 }
                 foreach (var citizen in citizens)
                 {
-                    if (InSameLocation(police, citizen))
+                    if (Person.InSameLocation(police, citizen))
                     {
                         Program.queue.Enqueue("A Cop greet a citizen ");
                     }
@@ -66,10 +67,6 @@
             }
         }
 
-        private static bool InSameLocation(Person Person1, Person Person2)
-        {
-            return Person1.LocationY == Person2.LocationY &&
-                   Person1.LocationX == Person2.LocationX;
-        }
+        
     }
 }

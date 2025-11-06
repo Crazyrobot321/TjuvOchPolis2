@@ -8,23 +8,32 @@ namespace TjuvOchPolis
 {
     internal class Places
     {
-        public bool HasRan { get; set; }
+        public bool HasRun { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public Places(bool hasRan, int width, int height) 
+        public Places(bool hasRun, int width, int height) 
         {
-            HasRan = hasRan;
+            HasRun = hasRun;
             Width = width;
             Height = height;
         }
 
-        internal static void RenderGameBoard(bool hasRan, int width, int height)
+        
+    }
+
+    internal class City : Places
+    {
+        public City(bool hasRun, int width, int height): base(hasRun, width, height)
+        {
+            
+        }
+        internal static void RenderGameBoard(bool hasRun, int width, int height)
         {
             //spelytan för alla karaktärer ska vara 100x25, därav väggar runt staden
             var gameHeight = height + 2; //102
             var gameWidth = width + 2; // 27
 
-            if (!hasRan)
+            if (!hasRun)
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 for (int line = 0; line < gameHeight; line++)
@@ -49,8 +58,6 @@ namespace TjuvOchPolis
                                 Console.Write("=");
                             }
                         }
-
-
                         else if (isFirstRow || isLastRow)
                         {
                             Console.Write("||");
@@ -63,15 +70,23 @@ namespace TjuvOchPolis
                     Console.WriteLine();
                 }
             }
-           Console.ForegroundColor= ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.White;
         }
-        internal static void RenderPrison(bool hasRan, int width, int height)
+    }
+
+    internal class Prison : Places
+    {
+        public Prison(bool hasRun, int width, int height): base(hasRun, width, height)
+        {
+            
+        }
+        internal static void RenderPrison(bool hasRun, int width, int height)
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
             //spelytan för alla karaktärer ska vara 20*5, därav väggar runt fängelset
             var gameHeight = height + 2; //22
             var gameWidth = width + 2; // 7
-            if (!hasRan)
+            if (!hasRun)
             {
                 for (int line = 0; line < gameHeight; line++)
                 {
@@ -111,21 +126,6 @@ namespace TjuvOchPolis
             }
             Console.ForegroundColor = ConsoleColor.White;
         }
-    }
 
-    internal class City : Places
-    {
-        public City(bool hasRan, int width, int height): base(hasRan, width, height)
-        {
-            
-        }
-    }
-
-    internal class Prison : Places
-    {
-        public Prison(bool hasRan, int width, int height): base(hasRan, width, height)
-        {
-            
-        }
     }
 }
