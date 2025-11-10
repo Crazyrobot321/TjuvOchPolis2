@@ -14,9 +14,9 @@ namespace TjuvOchPolis
         public static int minY = 2;
         //Prison
         public static int prisonMaxX = 20;
-        public static int prisonMaxY = 32;
+        public static int prisonMaxY = 22;
         public static int prisonMinX = 2;
-        public static int prisonMinY = 28;
+        public static int prisonMinY = 18;
 
         //Personernas Riktning och rörelse
 
